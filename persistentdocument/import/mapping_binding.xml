@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+	<binding fileName="modules/generic/persistentdocument/import/generic_binding.xml" />
+
+	<binding name="rectarea" className="mapping_RectareaScriptDocumentElement" />
+	<binding name="area" className="mapping_AreaScriptDocumentElement" />
+	<binding name="circarea" className="mapping_CircareaScriptDocumentElement" />
+	<binding name="mapping" className="mapping_MappingScriptDocumentElement" />
+	<binding name="polyarea" className="mapping_PolyareaScriptDocumentElement" />
+</script>

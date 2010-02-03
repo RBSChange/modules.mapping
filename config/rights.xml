@@ -1,0 +1,63 @@
+<rights>
+	<actions>
+		<document name="rootfolder" />
+		<document name="folder" />
+		<document name="circarea" />
+		<document name="polyarea" />
+		<document name="rectarea" />
+		<document name="mapping" />
+		<action name="EditMapping" />
+	</actions>
+	<roles>
+		<role name="Admin">
+			<permission name="*" />
+			<permission name="LoadPermissions.*" />
+			<permission name="SavePermissions.*" />
+			<permission name="GetPreferencesDocument" />
+			<permission name="EditLocale" />
+		</role>
+		<role name="Writer" extend="Guest">
+			<permission name="Order" />
+			<permission name="Move.*" />
+			<permission name="Load.*" />
+			<permission name="Rename.*" />
+			<permission name="PutInTrash.*" />
+			<permission name="Delete.*" />
+			<permission name="Insert.*" />
+			<permission name="Update.*" />
+			<permission name="Activate.*" />
+			<permission name="EditMapping" />
+			<permission name="LoadTags" />
+		</role>
+		<role name="Translator" extend="Guest">
+			<permission name="Load.*" />
+			<permission name="LoadForTranslation.*" />
+			<permission name="UpdateTranslation.*" />
+		</role>
+		<role name="Validator" extend="Guest">
+			<permission name="Load.*" />
+			<permission name="Activate.*" />
+			<permission name="Cancel.*" />
+			<permission name="Deactivated.*" />
+			<permission name="ReActivate.*" />
+		</role>
+		<role name="Guest" extend="User">
+			<permission name="Enabled" />
+			<permission name="Load.circarea" />
+			<permission name="Load.polyarea" />
+			<permission name="Load.rectarea" />
+			<permission name="Delete.circarea" />
+			<permission name="Delete.polyarea" />
+			<permission name="Delete.rectarea" />
+			<permission name="Insert.circarea" />
+			<permission name="Insert.polyarea" />
+			<permission name="Insert.rectarea" />
+			<permission name="Update.circarea" />
+			<permission name="Update.polyarea" />
+			<permission name="Update.rectarea" />
+		</role>
+		<role name="User">
+			<permission name="List.*" />
+		</role>
+	</roles>
+</rights>

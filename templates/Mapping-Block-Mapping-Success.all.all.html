@@ -1,0 +1,5 @@
+<img change:media="document mapping/getPicture; alt mapping/getPictureAlt; usemap mapping/getMapLabelAnchor; toto 'titi'; class 'mapper'"  />
+
+<map tal:attributes="name mapping/getMapLabel; id mapping/getMapLabel">
+	<area tal:repeat="area areas" tal:attributes="class area/class; shape area/object/getShape ; href area/object/getHref; alt area/object/getAlt; title area/object/getAlt; coords area/object/getCoords" />
+</map>

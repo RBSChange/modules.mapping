@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="document-name">
+    <locale lang="fr">image réactive</locale>
+    <locale lang="de">reaktives Bild</locale>
+  </entity>
+  <entity id="edition-form-title">
+    <locale lang="fr">propriétés de l'image réactive</locale>
+    <locale lang="en">mapping properties</locale>
+    <locale lang="de">Eigenschaften reaktives Bild</locale>
+  </entity>
+  <entity id="label">
+    <locale lang="fr">nom</locale>
+    <locale lang="en">name</locale>
+    <locale lang="de">Name</locale>
+  </entity>
+  <entity id="description">
+    <locale lang="fr">description</locale>
+    <locale lang="en">description</locale>
+    <locale lang="de">Beschreibung</locale>
+  </entity>
+  <entity id="picture">
+    <locale lang="fr">image</locale>
+    <locale lang="en">picture</locale>
+    <locale lang="de">Bild</locale>
+  </entity>
+<!-- help -->
+  <entity id="Label-help">
+    <locale lang="fr">nom de l'image réactive</locale>
+    <locale lang="en">image map name</locale>
+    <locale lang="de">Name reaktives Bild</locale>
+  </entity>
+  <entity id="Description-help">
+    <locale lang="fr">description de l'image réactive</locale>
+    <locale lang="en">image map description</locale>
+    <locale lang="de">Beschreibung reaktives Bild</locale>
+  </entity>
+  <entity id="Picture-help">
+    <locale lang="fr">glisser ici l'image à exploiter</locale>
+    <locale lang="en">drop picture here</locale>
+    <locale lang="de">Hier das zu nutzende Bild einfügen</locale>
+  </entity>
+</localization>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+	<entity id="insert-mapping">
+		<locale lang="fr">insert.mapping {documentlabel}</locale>
+	</entity>
+	<entity id="log-insert-mapping">
+		<locale lang="fr">log-insert-mapping</locale>
+	</entity>
+	<entity id="delete-circarea">
+		<locale lang="fr">delete.circarea {documentlabel}</locale>
+	</entity>
+	<entity id="log-delete-circarea">
+		<locale lang="fr">log-delete-circarea</locale>
+	</entity>
+	<entity id="update-rectarea">
+		<locale lang="fr">update.rectarea {documentlabel}</locale>
+	</entity>
+	<entity id="log-update-rectarea">
+		<locale lang="fr">log-update-rectarea</locale>
+	</entity>
+	<entity id="activate-mapping">
+		<locale lang="fr">activate.mapping {documentlabel}</locale>
+	</entity>
+	<entity id="log-activate-mapping">
+		<locale lang="fr">log-activate-mapping</locale>
+	</entity>
+	<entity id="update-circarea">
+		<locale lang="fr">update.circarea {documentlabel}</locale>
+	</entity>
+	<entity id="log-update-circarea">
+		<locale lang="fr">log-update-circarea</locale>
+	</entity>
+	<entity id="insert-folder">
+		<locale lang="fr">insert.folder {documentlabel}</locale>
+	</entity>
+	<entity id="log-insert-folder">
+		<locale lang="fr">log-insert-folder</locale>
+	</entity>
+	<entity id="update-folder">
+		<locale lang="fr">update.folder {documentlabel}</locale>
+	</entity>
+	<entity id="log-update-folder">
+		<locale lang="fr">log-update-folder</locale>
+	</entity>
+	<entity id="delete-folder">
+		<locale lang="fr">delete.folder {documentlabel}</locale>
+	</entity>
+	<entity id="log-delete-folder">
+		<locale lang="fr">log-delete-folder</locale>
+	</entity>
+	<entity id="deactivated-mapping">
+		<locale lang="fr">deactivated.mapping {documentlabel}</locale>
+	</entity>
+	<entity id="log-deactivated-mapping">
+		<locale lang="fr">log-deactivated-mapping</locale>
+	</entity>
+	<entity id="reactivate-mapping">
+		<locale lang="fr">reactivate.mapping {documentlabel}</locale>
+	</entity>
+	<entity id="log-reactivate-mapping">
+		<locale lang="fr">log-reactivate-mapping</locale>
+	</entity>
+	<entity id="delete-mapping">
+		<locale lang="fr">delete.mapping {documentlabel}</locale>
+	</entity>
+	<entity id="log-delete-mapping">
+		<locale lang="fr">log-delete-mapping</locale>
+	</entity>
+	<entity id="update-polyarea">
+		<locale lang="fr">update.polyarea {documentlabel}</locale>
+	</entity>
+	<entity id="log-update-polyarea">
+		<locale lang="fr">log-update-polyarea</locale>
+	</entity>
+	<entity id="activate-circarea">
+		<locale lang="fr">activate.circarea {documentlabel}</locale>
+	</entity>
+	<entity id="log-activate-circarea">
+		<locale lang="fr">log-activate-circarea</locale>
+	</entity>
+	<entity id="update-mapping">
+		<locale lang="fr">update.mapping {documentlabel}</locale>
+	</entity>
+	<entity id="log-update-mapping">
+		<locale lang="fr">log-update-mapping</locale>
+	</entity>
+</localization>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+	<entity id="tab.AreaEditor">
+		<locale lang="fr">edition des zones</locale>
+		<locale lang="en">zones editor</locale>
+	</entity>
+	
+	<entity id="Zone-list">
+		<locale lang="fr">Liste des zones</locale>
+		<locale lang="en">zones list</locale>
+	</entity>
+</localization>

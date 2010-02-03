@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="module-name">
+    <locale lang="fr">images réactives</locale>
+    <locale lang="en">image maps</locale>
+    <locale lang="de">Reaktivbilder</locale>
+  </entity>
+  <entity id="tree-root-name">
+    <locale lang="fr">images réactives</locale>
+    <locale lang="en">image maps</locale>
+    <locale lang="de">Reaktivbilder</locale>
+  </entity>
+  <entity id="system-folder-name">
+    <locale lang="fr">images réactives</locale>
+    <locale lang="en">image maps</locale>
+    <locale lang="de">Reaktivbilder</locale>
+  </entity>
+  <entity id="tooltip.circlebegin">
+    <locale lang="fr">cliquez sur l'image pour définir le centre du cercle</locale>
+    <locale lang="en">lost in translation</locale>
+    <locale lang="de">Klicken Sie das Bild an, um die Kreismitte zu definieren</locale>
+  </entity>
+  <entity id="tooltip.circledrawing">
+    <locale lang="fr">maintenez le bouton appuyé et déplacez la souris pour définir le rayon</locale>
+    <locale lang="en">lost in translation</locale>
+    <locale lang="de">halten Sie den Knopf gedrückt und bewegen Sie die Maus, um den Radius zu definieren</locale>
+  </entity>
+  <entity id="tooltip.rectanglebegin">
+    <locale lang="fr">cliquez sur l'image pour définir le point de départ du rectangle</locale>
+    <locale lang="en">lost in translation</locale>
+    <locale lang="de">Klicken Sie das Bild an, um den Ansatzpunkt des Rechtecks zu definieren</locale>
+  </entity>
+  <entity id="tooltip.rectangledrawing">
+    <locale lang="fr">maintenez le bouton appuyé et déplacez la souris pour définir le rectangle</locale>
+    <locale lang="en">lost in translation</locale>
+    <locale lang="de">halten Sie den Knopf gedrückt und bewegen Sie die Maus, um das Rechteck zu definieren</locale>
+  </entity>
+  <entity id="tooltip.polybegin">
+    <locale lang="fr">cliquez sur l'image pour définir le point de départ du polygone, puis relâchez le bouton</locale>
+    <locale lang="en">lost in translation</locale>
+    <locale lang="de">Klicken Sie das Bild an, um den Ansatzpunkt des Polygons zu definieren, dann lassen Sie den Knopf los</locale>
+  </entity>
+  <entity id="tooltip.polydrawing">
+    <locale lang="fr">cliquez ailleurs pour définir le point suivant (cliquez sur le point d'origine pour fermer le polygone)</locale>
+    <locale lang="en">lost in translation</locale>
+    <locale lang="de">Klicken Sie anderswo, um den nächsten Punkt zu definieren (klicken Sie auf den Anfangspunkt, um das Polygon zu schliessen)</locale>
+  </entity>
+  <entity id="tooltip.blocker">
+    <locale lang="fr">mise à jour du document en cours,<br/>veuillez patienter</locale>
+    <locale lang="en">lost in translation</locale>
+    <locale lang="de">Dokument wird aktualisiert,<br/>bitte warten</locale>
+  </entity>
+<!-- tabs in froms -->
+  <entity id="tab.general">
+    <locale lang="fr">propriétés principales</locale>
+    <locale lang="en">main data</locale>
+    <locale lang="de">Haupteigenschaften</locale>
+  </entity>
+  <entity id="tab.style">
+    <locale lang="fr">styles</locale>
+    <locale lang="en">styles</locale>
+    <locale lang="de">Stile</locale>
+  </entity>
+  <entity id="tab.coords">
+    <locale lang="fr">coordonnées</locale>
+    <locale lang="en">coordinates</locale>
+    <locale lang="de">Daten</locale>
+  </entity>
+  <entity id="newzone">
+    <locale lang="fr">nouvelle zone #{count}</locale>
+    <locale lang="en">new area #{count}</locale>
+    <locale lang="de">neue Zone #{count}</locale>
+  </entity>
+</localization>

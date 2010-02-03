@@ -1,0 +1,24 @@
+
+mappingeditor {
+	-moz-binding: url(binding:modules.mapping.cMappingEditor#mappingeditor);
+}
+
+mappingarea.rectarea {
+	-moz-binding: url(binding:modules.mapping.cMappingEditor#rectarea);
+}
+
+mappingarea.circlearea {
+	-moz-binding: url(binding:modules.mapping.cMappingEditor#circlearea);
+}
+
+mappingarea.polygonarea {
+	-moz-binding: url(binding:modules.mapping.cMappingEditor#polygonarea);
+}
+
+cdocumenteditor careaeditorpanel{
+	-moz-binding: url(binding:modules.mapping.cMappingEditor#careaeditorpanel);
+}
+
+cfield[fieldtype="zonesinfolist"]{
+	-moz-binding: url(binding:modules.mapping.cMappingEditor#czonesinfolist);
+}

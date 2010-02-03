@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel>
+  <section labeli18n="modules.uixul.bo.doceditor.fieldsgroup.Title">
+    <field name="label"/>
+    <field name="description"/>
+    <field name="floating"/>
+    <field name="resource" moduleselector="website" allow=""/>
+    <field name="url"/>
+    <field name="popup"/>
+    <field name="bordercolor" type="color"/>
+    <field name="borderwidth"/>
+    <field name="pictogram"/>
+    <field name="areaBorderColor" type="color"/>
+    <field name="areaBgColor" type="color"/>
+    <field name="areaOpacity"/>
+  </section>
+</panel>

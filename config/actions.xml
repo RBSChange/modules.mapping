@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<actions>
+	<action name="createFolder">
+		<parameter name="listWidget" />
+		<body><![CDATA[
+			this.createDocumentEditor('modules_media_folder', listWidget.getSelectedItems()[0].id);
+		]]></body>
+	</action>
+
+	<action name="createMapping">
+		<parameter name="listWidget" />
+		<body><![CDATA[
+			this.createDocumentEditor('modules_mapping_mapping', listWidget.getSelectedItems()[0].id);
+		]]></body>
+	</action>
+</actions>

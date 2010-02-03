@@ -1,0 +1,12 @@
+treechildren::-moz-tree-image(modules_mapping_mapping){
+	list-style-image: url(/icons/small/mapping.png) ;
+}
+treechildren::-moz-tree-image(modules_mapping_rectarea){
+	list-style-image: url(/icons/small/shape-rectangle.png) ;
+}
+treechildren::-moz-tree-image(modules_mapping_circarea){
+	list-style-image: url(/icons/small/shape-circle.png) ;
+}
+treechildren::-moz-tree-image(modules_mapping_polyarea){
+	list-style-image: url(/icons/small/shape-polygon.png) ;
+}

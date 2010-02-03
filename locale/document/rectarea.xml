@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="document-name">
+    <locale lang="fr">zone rectangulaire</locale>
+    <locale lang="de">rechteckige Zone</locale>
+  </entity>
+</localization>

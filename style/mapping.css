@@ -1,0 +1,87 @@
+#root-canvas{
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0!important;
+	border-left: none!important;
+	border-top: none!important;
+	border-right: 3px solid #666!important;
+	border-bottom: 3px solid #666!important;
+}
+toolbar toolbarbutton label{
+	font-size: 8pt;
+	font-weight: normal;
+	color: #000000;
+	font-family: arial, helvetica, sans-serif;
+}
+html{
+	background: url(/icons/admin/void.gif) ghostwhite;
+	cursor: crosshair;
+}
+body{
+	background: transparent;
+}
+.tooltip{
+	position: absolute;
+	z-index: 100;
+	color: black;
+	background: url(/media/backoffice/tooltip_corner.png) lemonchiffon bottom left no-repeat;
+	font-size: 10px;
+	padding: 5px;
+	font-weight: normal;
+	font-family: arial, helvetica, sans-serif;
+	border: 1px solid goldenrod;
+	-moz-border-radius-topleft: 6px;
+	-moz-border-radius-topright: 6px;
+	-moz-border-radius-bottomright: 6px;
+	visibility: hidden;
+	-moz-opacity: 0.8;
+}
+.blocker{
+	position: fixed;
+	z-index: 1000;
+	background-color: white;
+	visibility: hidden;
+	-moz-opacity: 0.6;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+.blocker-content{
+	color: black;
+	background-color: lemonchiffon;
+	font-size: 14px;
+	padding: 10px;
+	font-weight: bold;
+	font-family: arial, helvetica, sans-serif;
+	border: 1px solid goldenrod;
+	margin-left: 25%;
+	margin-top: 25%;
+	width: 50%;
+	-moz-border-radius: 6px;
+}
+controlpoint[type="resize-up"]{
+	cursor: n-resize;
+}
+controlpoint[type="resize-up-right"]{
+	cursor: ne-resize;
+}
+controlpoint[type="resize-up-left"]{
+	cursor: nw-resize;
+}
+controlpoint[type="resize-left"]{
+	cursor: w-resize;
+}
+controlpoint[type="resize-bottom-left"]{
+	cursor: sw-resize;
+}
+controlpoint[type="resize-bottom"]{
+	cursor: s-resize;
+}
+controlpoint[type="resize-bottom-right"]{
+	cursor: se-resize;
+}
+controlpoint[type="resize-right"]{
+	cursor: e-resize;
+}

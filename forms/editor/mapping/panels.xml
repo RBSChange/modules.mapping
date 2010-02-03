@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<panels>
+	<panel name="resume" />
+	<panel name="properties" />
+	<panel name="publication" />
+	<panel name="history" />
+	<panel name="create" />
+
+	<xul>
+		<javascript>
+			<constructor><![CDATA[
+				this.addTab('areaeditor', '&modules.mapping.bo.doceditor.tab.AreaEditor;', 'document');
+			]]></constructor>
+		</javascript>
+	</xul>	  
+</panels>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="mapping">
+    <locale lang="fr">image réactive</locale>
+    <locale lang="en">image map</locale>
+    <locale lang="de">reaktives Bild</locale>
+  </entity>
+  <entity id="area">
+    <locale lang="fr">zone cliquable</locale>
+    <locale lang="en">clickable area</locale>
+    <locale lang="de">anklickbare Zone</locale>
+  </entity>
+</localization>

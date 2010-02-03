@@ -1,0 +1,1526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings xmlns="http://www.mozilla.org/xbl"
+          xmlns:xbl="http://www.mozilla.org/xbl"
+          xmlns:html="http://www.w3.org/1999/xhtml"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+          
+    <binding id="mappingeditor">
+    	<content>
+	   	   <xul:vbox flex="1">
+				<xul:toolbox orient="vertical" class="change-toolbox">
+					<xul:toolbar flex="1" class="change-toolbar" style="font-size: 9pt;" height="25">
+						<xul:toolbarbutton anonid="selectionmode" change:icon="edit/small" label="Selection"
+							oncommand="selectionMode();" class="selected" autoCheck="false" type="checkbox" checked="true" />	
+						<xul:toolbarbutton anonid="mappingboxbutton" change:icon="shape-rectangle/small" label="Create rectangle area" 
+							i18n:attributes="label &amp;modules.mapping.bo.actions.Createrectanglearea; tooltiptext &amp;modules.mapping.bo.actions.Createrectangleareatooltip;" 
+							oncommand="createArea('rectarea');" class="unselected" autoCheck="false" type="checkbox"/>
+						<xul:toolbarbutton anonid="mappingcirclebutton" change:icon="shape-circle/small" label="Create circle area" 
+							i18n:attributes="label &amp;modules.mapping.bo.actions.Createcirclearea; tooltiptext &amp;modules.mapping.bo.actions.Createcircleareatooltip;" 
+							oncommand="createArea('circlearea');" class="unselected" autoCheck="false" type="checkbox"/>
+						<xul:toolbarbutton anonid="mappingpolygonbutton" change:icon="shape-polygon/small" label="Create polygon area" 
+							i18n:attributes="label &amp;modules.mapping.bo.actions.Createpolygonarea; tooltiptext &amp;modules.mapping.bo.actions.Createpolygonareatooltip;" 
+							oncommand="createArea('polygonarea');" class="unselected" autoCheck="false" type="checkbox"/>
+							
+						<xul:hbox align="center" flex="1">
+							<xul:label xbl:inherits="value=status-info" crop="end"/>
+							<xul:spacer flex="1" />
+							<xul:label xbl:inherits="value=cursor-coord" width="40"/>	
+						</xul:hbox>
+					</xul:toolbar>
+				</xul:toolbox>
+				
+				<xul:vbox pack="start" align="start" style="background-color: #ebebeb;" flex="1" anonid="max-size" context="TODO_UNIQUEID_contextPopup">
+					<xul:stack xbl:inherits="width=editwidth,height=editheight">
+						<xul:image src="about:blank" anonid="original-image" xbl:inherits="width=editwidth,height=editheight"/>
+						<svg:svg anonid="svg-document" style="cursor:crosshair;" xbl:inherits="width=editwidth,height=editheight">
+						</svg:svg>
+					</xul:stack>
+					<xul:spacer />
+				</xul:vbox>
+
+				
+			<xul:popupset>
+				<xul:menupopup anonid="contextPopup" id="TODO_UNIQUEID_contextPopup">
+					<xul:menuitem label="Supprimer" anonid="delete-current-area" oncommand="deleteCurrentArea();" />
+				</xul:menupopup>
+			</xul:popupset>	
+			</xul:vbox>
+	   	</content>  	
+    	<implementation>
+    	
+    		<field name="svgDocument">null</field>
+    		<field name="imageInfo">null</field>
+    		<field name="coordInfo">null</field>
+    		<field name="tempAreaId">0</field>  
+    		<field name="currentArea">null</field>
+    		
+			<property name="mode">
+				<getter><![CDATA[
+					return this.hasAttribute('mode') ? this.getAttribute('mode') : 'select';
+				]]></getter>
+				<setter><![CDATA[
+					this.setAttribute('mode', val);
+				]]></setter>
+			</property>
+			
+			
+			<property name="createtype">
+				<getter><![CDATA[
+					return this.getAttribute('createtype');
+				]]></getter>
+				<setter><![CDATA[
+					this.setAttribute('createtype', val);
+				]]></setter>
+			</property>	
+			
+			<property name="editaction">
+				<getter><![CDATA[
+					return this.getAttribute('editaction');
+				]]></getter>
+				<setter><![CDATA[
+					this.setAttribute('editaction', val);
+				]]></setter>
+			</property>				
+			
+			<property name="selectedzoneid" readonly="true">
+				<getter><![CDATA[
+					return this.hasAttribute('selectedzoneid') ? this.getAttribute('selectedzoneid') : null;
+				]]></getter>
+			</property>
+			
+			<method name="createArea">
+				<parameter name="areaType"/>
+				<body><![CDATA[
+					this.mode = 'create';
+					this.createtype = areaType;
+					if (this.currentArea)
+					{
+						this.unselectCurrentArea();
+					}
+					this.updateCmdState();
+				]]></body>
+			</method>
+			
+			<method name="selectionMode">
+				<body><![CDATA[
+					this.mode = 'select';
+					this.createtype = '';
+					if (this.currentArea)
+					{
+						this.unselectCurrentArea();
+					}
+					this.updateCmdState();
+				]]></body>
+			</method>
+			
+			
+			<method name="updateCmdState">
+				<body><![CDATA[
+					var button = this.getElementByAnonId('selectionmode');
+					if (this.mode == 'select')
+					{
+						button.checked = true; button.setAttribute('class', 'selected');
+					}
+					else
+					{
+						button.checked = false; button.setAttribute('class', 'unselected');
+					}
+					
+					button = this.getElementByAnonId('mappingboxbutton');
+					if (this.mode === 'create' && this.createtype === 'rectarea')
+					{
+						button.checked = true; button.setAttribute('class', 'selected');
+					}
+					else
+					{
+						button.checked = false; button.setAttribute('class', 'unselected');
+					}
+					
+					button = this.getElementByAnonId('mappingcirclebutton');
+					if (this.mode === 'create' && this.createtype === 'circlearea')
+					{
+						button.checked = true; button.setAttribute('class', 'selected');
+					}
+					else
+					{
+						button.checked = false; button.setAttribute('class', 'unselected');
+					}
+
+					button = this.getElementByAnonId('mappingpolygonbutton');
+					if (this.mode === 'create' && this.createtype === 'polygonarea')
+					{
+						button.checked = true; button.setAttribute('class', 'selected');
+					}
+					else
+					{
+						button.checked = false; button.setAttribute('class', 'unselected');
+					}
+				]]></body>
+			</method>			
+			
+			
+			<method name="getTempAreaId">
+				<body><![CDATA[
+					this.tempAreaId++;
+					return 't' + this.tempAreaId;
+				]]></body>
+			</method>			
+				
+			<method name="createNewAreaElement">
+				<parameter name="createtype"/>
+				<body><![CDATA[
+					var area = document.createElement('mappingarea');
+					area.setAttribute('class', createtype);
+					this.svgDocument.appendChild(area);
+					return area;
+				]]></body>
+			</method>			
+			
+			<method name="unselectCurrentArea">
+				<body><![CDATA[
+					if ('unselect' in this.currentArea) {this.currentArea.unselect();}
+					if (!this.currentArea.isValid())
+					{
+						wCore.warn('remove invalid Area');
+						this.svgDocument.removeChild(this.currentArea);
+					}
+					this.currentArea = null;
+					this.updateAreaStatusInfo(null);
+				]]></body>
+			</method>
+			
+			<method name="selectArea">
+				<parameter name="area"/>
+				<body><![CDATA[
+					this.currentArea = area;
+					this.updateAreaStatusInfo(area);
+					if ('select' in area) {area.select();}
+				]]></body>
+			</method>	
+			
+			<method name="updateAreaStatusInfo">
+				<parameter name="area"/>
+				<body><![CDATA[
+					if (area == null)
+					{
+						this.removeAttribute('selectedzoneid');
+						this.removeAttribute('status-info');
+					}
+					else
+					{
+						this.setAttribute('selectedzoneid', area.areaId);
+						this.setAttribute('status-info', ' Zone: ' + area.getAttribute('name') + ' [' + area.areaId + ']');
+					}
+				]]></body>
+			</method>	
+						
+			<method name="addNewArea">
+				<parameter name="area"/>
+				<body><![CDATA[
+					this.currentArea = area;
+					if ('startCreation' in area) {area.startCreation(this.coordInfo, this.getTempAreaId());}
+					this.updateAreaStatusInfo(area);					
+				]]></body>
+			</method>					
+											   		
+    		<constructor><![CDATA[
+    			this.svgDocument = this.getElementByAnonId('svg-document');   			
+    			var me = this;
+    			var ctxMnu = this.getElementByAnonId('contextPopup')
+				ctxMnu.addEventListener('popupshowing', function(event) {me.initContextMenu(event)}, false);  
+    			this.selectionMode();	
+    			
+    			this.updateCmdState();
+    			
+				var me = this;
+				this.svgDocument.addEventListener('mousemove', function(event) {me.onMouseMove(event)}, true);			
+				this.svgDocument.addEventListener('mousedown', function(event) {me.onMouseDown(event)}, false);
+				this.svgDocument.addEventListener('mouseup', function(event) {me.onMouseUp(event)}, false);					
+			]]></constructor>
+			
+			<method name="initContextMenu">
+				<parameter name="event"/>
+				<body><![CDATA[
+					if (this.mode == 'select' && this.currentArea)
+					{
+						// wCore.debug('initContextMenu');				
+					}
+					else
+					{
+						event.preventDefault();
+					}					
+				]]></body>
+			</method>	
+			
+			<method name="deleteCurrentArea">
+				<body><![CDATA[	
+					var area = this.currentArea;
+					var remove = area.isValid();
+					this.unselectCurrentArea();
+					if (remove) {this.svgDocument.removeChild(area);}					
+				]]></body>
+			</method>						
+			
+			<method name="getElementByAnonId">
+				<parameter name="anonid"/>
+				<body><![CDATA[
+					return document.getAnonymousElementByAttribute(this, "anonid", anonid);
+				]]></body>
+			</method>
+			
+			<method name="setImage">
+				<parameter name="imageInfo"/>
+				<body><![CDATA[				
+					this.imageInfo = {src: imageInfo.src, width: imageInfo.width, height: imageInfo.height};
+					this.imageInfo.ratio = this.imageInfo.width / this.imageInfo.height;
+					
+					var image = this.getElementByAnonId('original-image');
+					image.setAttribute('src', imageInfo.src);
+					var maxSize = this.getElementByAnonId('max-size');
+					this.coordInfo = {
+						maxWidth: maxSize.boxObject.width, 
+						maxHeight: maxSize.boxObject.height,
+						clientX: maxSize.boxObject.x, 
+						clientY: maxSize.boxObject.y,
+						editWidth : this.imageInfo.width,
+						editHeight : this.imageInfo.height
+					}
+					
+					this.coordInfo.scale = Math.min(this.coordInfo.maxWidth / this.imageInfo.width, 1);					
+					if (this.coordInfo.scale < 1)
+					{
+						this.coordInfo.editWidth = this.coordInfo.maxWidth;
+						this.coordInfo.editHeight = this.coordInfo.maxWidth / this.imageInfo.ratio;
+					}
+					
+					var sY =  this.coordInfo.maxHeight / this.coordInfo.editHeight;
+					if (sY < 1)
+					{
+						this.coordInfo.editHeight = this.coordInfo.maxHeight;
+						this.coordInfo.editWidth = this.coordInfo.editHeight * this.imageInfo.ratio;
+						this.coordInfo.scale *= sY;
+					}
+					
+					this.setAttribute("editwidth", Math.round(this.coordInfo.editWidth));
+					this.setAttribute("editheight", Math.round(this.coordInfo.editHeight));
+					wCore.debug(wCore.dump(this.imageInfo));
+					wCore.debug(wCore.dump(this.coordInfo));
+		
+				]]></body>
+			</method>	
+			
+			<method name="setZones">
+				<parameter name="areaInfos"/>
+				<body><![CDATA[		
+					var svgDoc = this.svgDocument;
+					while (svgDoc.lastChild) {svgDoc.removeChild(svgDoc.lastChild);}
+					this.currentArea = null;
+					this.updateAreaStatusInfo(null);
+					this.selectionMode();
+					if (!areaInfos) return;
+					
+					for (var i = 0; i < areaInfos.length; i++)
+					{
+						var areaInfo = areaInfos[i];
+						var area = this.createNewAreaElement(areaInfo.type);
+						area.areaId = areaInfo.id;
+						area.setAttribute('name', areaInfo.name);
+						area.setAreaInfo(areaInfo, this.coordInfo);
+					}
+				]]></body>
+			</method>
+			
+			<method name="getZones">
+				<body><![CDATA[		
+					areaInfos = [];
+					var svgDoc = this.svgDocument;
+					var area = svgDoc.firstChild;
+					while (area) 
+					{
+						if ('getAreaInfo' in area)
+						{
+							if (area.isValid()) {areaInfos.push(area.getAreaInfo(this.coordInfo));}
+						}				
+						area = area.nextSibling;
+					}
+					return areaInfos;
+				]]></body>
+			</method>								
+			
+			<method name="setCursorCoord">
+				<parameter name="event"/>
+				<body><![CDATA[
+					this.coordInfo.cursorX = event.clientX - this.coordInfo.clientX;
+					this.coordInfo.cursorY = event.clientY - this.coordInfo.clientY;				
+					this.setAttribute('cursor-coord', 'X:' + Math.round(this.coordInfo.cursorX / this.coordInfo.scale) 
+							+ ', Y:' +Math.round(this.coordInfo.cursorY / this.coordInfo.scale));	
+				]]></body>
+			</method>	
+			
+			<method name="onAreaMouseDown">
+				<parameter name="event"/>
+				<parameter name="area"/>
+				<parameter name="editaction"/>
+				<body><![CDATA[
+					if (this.mode == 'select')
+					{
+						if (this.currentArea != area)
+						{
+							if (this.currentArea) {this.unselectCurrentArea();}
+							this.selectArea(area);
+						}
+						this.editaction = editaction;
+						this.coordInfo.downX = this.coordInfo.cursorX;
+						this.coordInfo.downY = this.coordInfo.cursorY;
+						this.coordInfo.dragging = true;
+					}
+					else
+					{
+						this.onMouseDown(event);
+					}
+				]]></body>
+			</method>						
+
+			<method name="onMouseMove">
+				<parameter name="event"/>
+				<body><![CDATA[
+					this.setCursorCoord(event);
+					if (this.coordInfo.dragging && this.currentArea)
+					{
+						if (this.mode == 'select')
+						{
+							this.currentArea['onMouseMove' + this.editaction](this.coordInfo);
+						}
+						else
+						{
+							this.currentArea.onMouseMoveCreate(this.coordInfo);
+						}
+					}
+				]]></body>
+			</method>
+			
+			<method name="onMouseDown">
+				<parameter name="event"/>
+				<body><![CDATA[
+					if (this.mode == 'create')
+					{
+						// wCore.debug('onMouseDown:create');
+						if (!this.currentArea) 
+						{
+							var area = this.createNewAreaElement(this.createtype);
+							this.addNewArea(area);
+						}
+						this.coordInfo.downX = this.coordInfo.cursorX;
+						this.coordInfo.downY = this.coordInfo.cursorY;
+						this.coordInfo.dragging = true;
+					}
+					else if (this.mode == 'select')
+					{
+						if (this.currentArea){this.unselectCurrentArea();}						
+					}
+				]]></body>
+			</method>
+			
+			<method name="onMouseUp">
+				<parameter name="event"/>
+				<body><![CDATA[
+					// wCore.debug('onMouseUp: ' + event.originalTarget.localName);
+					this.editaction = '';
+					this.coordInfo.dragging = false;
+					if (this.mode == 'create')
+					{
+						if (this.currentArea)
+						{
+							if (this.currentArea.endCreation(this.coordInfo))
+							{
+								this.unselectCurrentArea();
+							}
+						}
+					}
+				]]></body>
+			</method>
+												
+    	</implementation>
+    </binding>
+    
+    <binding id="genericarea" extends="svg:generic">
+  		<implementation>
+ 			<field name="grips">[]</field>
+ 			<field name="mappingEditor">null</field>
+ 			<field name="mode">'editing'</field>
+			<field name="initial">null</field>
+			<field name="currentGrip">null</field>
+
+			<property name="areaId">
+				<getter><![CDATA[
+					return this.getAttribute('anonid');
+				]]></getter>
+				<setter><![CDATA[
+					this.setAttribute('anonid', val);
+				]]></setter>
+			</property>
+			
+			<method name="beginDrag">
+				<body><![CDATA[
+					// wCore.debug('beginDrag');
+					this.initial = this.getCoord();
+				]]></body>
+			</method>
+			
+			<method name="isValid">
+				<body><![CDATA[
+					return false;
+				]]></body>
+			</method>		
+			
+			<method name="createGrippy">
+				<parameter name="name"/>
+				<body><![CDATA[	
+					grippy = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+					grippy.setAttribute('name', name);
+					grippy.setAttribute('r', '5');
+					grippy.setAttribute('fill', 'lime');
+					grippy.setAttribute('style', 'fill-opacity: 0.3; stroke: black; stroke-opacity: 0.3;');
+					
+					var cursname = {gml:'e-resize', gmr:'w-resize', gtm:'s-resize', gbm:'n-resize', gmp:'move', gip:'move'};
+					grippy.setAttribute('cursor', cursname[name]);
+					
+					this.getMappingEditor().svgDocument.appendChild(grippy);
+					this.grips.push(grippy);
+					
+					var me = this;
+					grippy.addEventListener('mousedown', function(event) {me.onGrippyMouseDown(event)}, true);					
+					return grippy;
+				]]></body>
+			</method>
+						
+  			<method name="getMappingEditor">
+				<body><![CDATA[
+					if (this.mappingEditor == null)
+					{
+						var pn = this.parentNode;
+						while (pn.localName !== 'mappingeditor') {pn = pn.parentNode;}
+						this.mappingEditor = pn;
+					}
+					return this.mappingEditor;
+				]]></body>
+			</method>
+  		
+			<method name="select">
+				<body><![CDATA[
+					this.createGrips();
+					this.setAttribute('selected', 'true');
+					this.setAttribute('fill', 'yellow');
+				]]></body>
+			</method>	
+			
+			<method name="unselect">
+				<body><![CDATA[
+					for (var i = 0; i < this.grips.length; i++)
+					{
+						var grip = this.grips[i];
+						grip.parentNode.removeChild(grip);
+					}
+					this.currentGrip = null;
+					this.grips = [];
+					this.removeAttribute('selected', 'true');
+					this.setAttribute('fill', 'blue');
+				]]></body>
+			</method>	
+			
+ 			<method name="onMouseDown">
+				<parameter name="event"/>
+				<body><![CDATA[
+					// wCore.debug('genericarea:onMouseDown: ' + event.originalTarget.localName);
+					this.currentGrip = null;
+					this.beginDrag();
+					this.getMappingEditor().onAreaMouseDown(event, this, 'move');
+					event.stopPropagation();				
+				]]></body>
+			</method>
+			
+			<method name="onGrippyMouseDown">
+				<parameter name="event"/>
+				<body><![CDATA[
+					var updateAction = event.originalTarget.getAttribute('name');
+					// wCore.debug('genericarea:onGrippyMouseDown: ' + updateAction);
+					this.currentGrip = event.originalTarget;
+					this.beginDrag();
+					this.getMappingEditor().onAreaMouseDown(event, this, updateAction);
+					event.stopPropagation();
+				]]></body>
+			</method>		
+							
+     	</implementation> 
+     	
+	    <handlers>
+	      <handler event="mousedown"><![CDATA[
+				this.onMouseDown(event);
+	      ]]></handler>  
+	    </handlers>  
+    </binding>
+    
+    <binding id="rectarea" extends="modules.mapping.cMappingEditor#genericarea">
+    	<content>
+    		<svg:rect stroke="black" stroke-width="1px" fill="blue" opacity="0.5" xbl:inherits="style, x, y, width, height, stroke, stroke-width, fill" />
+    	</content>
+    	<implementation>	
+				
+    		<method name="getCoord">
+				<body><![CDATA[
+					return  {
+						x: parseInt(this.getAttribute('x'), 10),
+						y: parseInt(this.getAttribute('y'), 10),
+						width: parseInt(this.getAttribute('width'), 10),
+						height: parseInt(this.getAttribute('height'), 10)
+					}
+				]]></body>
+			</method>
+			
+    		<method name="createGrips">
+				<body><![CDATA[				
+					this.createGrippy('gml'); 				 			
+					this.createGrippy('gmr');					
+					this.createGrippy('gtm');					
+					this.createGrippy('gbm');	
+					this.updateGrips();						
+				]]></body>
+			</method>
+			
+			<method name="updateGrips">
+				<body><![CDATA[
+					var c = this.getCoord();
+					for (var i = 0; i < this.grips.length; i++)
+					{
+						var grip = this.grips[i];
+						switch (grip.getAttribute('name'))
+						{
+							case 'gml':
+								grip.setAttribute('cx', c.x);
+								grip.setAttribute('cy', Math.round(c.y + c.height / 2));
+								break;
+							case 'gmr':
+								grip.setAttribute('cx', c.x + c.width);
+								grip.setAttribute('cy', Math.round(c.y + c.height / 2));
+								break;
+							case 'gtm':
+								grip.setAttribute('cx', Math.round(c.x + c.width / 2));
+								grip.setAttribute('cy', c.y);
+								break;
+							case 'gbm':
+								grip.setAttribute('cx', Math.round(c.x + c.width / 2));
+								grip.setAttribute('cy', c.y + c.height);	
+								break;													
+						}
+					}					
+				]]></body>
+			</method>
+									
+			<method name="startCreation">
+				<parameter name="coordInfo"/>
+				<parameter name="tempId"/>
+				<body><![CDATA[
+					// wCore.debug('startCreation');
+					this.setAttribute('x', coordInfo.cursorX);
+					this.setAttribute('y', coordInfo.cursorY);
+					this.setAttribute('width', '0');
+					this.setAttribute('height', '0');
+					this.mode = 'create';
+					this.areaId = tempId;
+				]]></body>
+			</method>	
+			
+			<method name="endCreation">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					// wCore.debug('endCreation');
+					this.mode = 'editing';
+					return true;
+				]]></body>
+			</method>	
+			
+			<method name="isValid">
+				<body><![CDATA[
+					var coord = this.getCoord();
+					return coord.width > 0 && coord.height > 0;
+				]]></body>
+			</method>
+			
+			<method name="getAreaInfo">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var coord = this.getCoord();
+					var sc = coordInfo.scale; 
+					return {id: this.areaId, type:'rectarea', 
+						x: Math.round(coord.x / sc), 
+						y: Math.round(coord.y / sc), 
+						width: Math.round(coord.width / sc), 
+						height: Math.round(coord.height / sc)
+					} 
+				]]></body>
+			</method>	
+			
+			<method name="setAreaInfo">
+				<parameter name="areaInfo"/>
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var sc = coordInfo.scale;
+					this.setAttribute('x', Math.round(parseInt(areaInfo.x, 10) * sc));
+					this.setAttribute('y', Math.round(parseInt(areaInfo.y, 10) * sc));
+					this.setAttribute('width', Math.round(parseInt(areaInfo.width, 10) * sc));
+					this.setAttribute('height', Math.round(parseInt(areaInfo.height, 10) * sc));
+				]]></body>
+			</method>			
+			
+			
+			<method name="onMouseMoveCreate">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var dx = coordInfo.cursorX -  coordInfo.downX;
+					var dy = coordInfo.cursorY -  coordInfo.downY;
+					
+					this.setAttribute('x', (dx < 0) ? coordInfo.cursorX : coordInfo.downX);
+					this.setAttribute('width', Math.abs(dx));
+
+					this.setAttribute('y', (dy < 0) ? coordInfo.cursorY : coordInfo.downY);
+					this.setAttribute('height', Math.abs(dy));					
+				]]></body>
+			</method>			
+					
+			<method name="onMouseMovemove">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var dx = coordInfo.cursorX -  coordInfo.downX;
+					var dy = coordInfo.cursorY -  coordInfo.downY;				
+					this.setAttribute('x', this.initial.x + dx);
+					this.setAttribute('y', this.initial.y + dy);
+					this.updateGrips();				
+				]]></body>
+			</method>
+		
+			<method name="onMouseMovegmr">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var w = this.initial.width + coordInfo.cursorX -  coordInfo.downX;			
+					this.setAttribute('width', w < 0 ? 0 : w);
+					this.updateGrips();				
+				]]></body>
+			</method>
+			
+			<method name="onMouseMovegbm">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var h = this.initial.height + coordInfo.cursorY -  coordInfo.downY;			
+					this.setAttribute('height', h < 0 ? 0 : h);
+					this.updateGrips();				
+				]]></body>
+			</method>
+			
+			<method name="onMouseMovegml">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var dx = coordInfo.cursorX -  coordInfo.downX;
+					if (this.initial.width - dx < 0)
+					{
+						this.setAttribute('x', this.initial.x + this.initial.width);
+						this.setAttribute('width', 0);
+					}
+					else
+					{
+						this.setAttribute('x', this.initial.x + dx);
+						this.setAttribute('width',  this.initial.width - dx);					
+					}
+					this.updateGrips();				
+				]]></body>
+			</method>			
+
+			<method name="onMouseMovegtm">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var dy = coordInfo.cursorY -  coordInfo.downY;
+					if (this.initial.height - dy < 0)
+					{
+						this.setAttribute('y', this.initial.y + this.initial.height);
+						this.setAttribute('height', 0);
+					}
+					else
+					{
+						this.setAttribute('y', this.initial.y + dy);
+						this.setAttribute('height', this.initial.height - dy);					
+					}
+					this.updateGrips();				
+				]]></body>
+			</method>	
+									
+    	</implementation>
+    </binding>  
+    
+    <binding id="circlearea" extends="modules.mapping.cMappingEditor#genericarea">
+    	<content>
+    		<svg:circle stroke="black" stroke-width="1px" fill="blue" opacity="0.5" xbl:inherits="style, cx, cy, r, stroke, stroke-width, fill" />
+    	</content>
+    	<implementation>
+    					
+    		<method name="getCoord">
+				<body><![CDATA[
+					return  {
+						cx: parseInt(this.getAttribute('cx'), 10),
+						cy: parseInt(this.getAttribute('cy'), 10),
+						r: parseInt(this.getAttribute('r'), 10),
+					}
+				]]></body>
+			</method>
+			
+    		<method name="createGrips">
+				<body><![CDATA[				
+					this.createGrippy('gml'); 				 			
+					this.createGrippy('gmr');					
+					this.createGrippy('gtm');					
+					this.createGrippy('gbm');	
+					this.updateGrips();						
+				]]></body>
+			</method>
+			
+			<method name="updateGrips">
+				<body><![CDATA[
+					var c = this.getCoord();
+					for (var i = 0; i < this.grips.length; i++)
+					{
+						var grip = this.grips[i];
+						switch (grip.getAttribute('name'))
+						{
+							case 'gml':
+								grip.setAttribute('cx', c.cx - c.r);
+								grip.setAttribute('cy', c.cy);
+								break;
+							case 'gmr':
+								grip.setAttribute('cx', c.cx + c.r);
+								grip.setAttribute('cy', c.cy);
+								break;
+							case 'gtm':
+								grip.setAttribute('cx', c.cx);
+								grip.setAttribute('cy', c.cy - c.r);
+								break;
+							case 'gbm':
+								grip.setAttribute('cx', c.cx);
+								grip.setAttribute('cy', c.cy + c.r);	
+								break;													
+						}
+					}					
+				]]></body>
+			</method>
+												
+
+			
+			<method name="startCreation">
+				<parameter name="coordInfo"/>
+				<parameter name="tempId"/>
+				<body><![CDATA[
+					// wCore.debug('startCreation');
+					this.setAttribute('cx', coordInfo.cursorX);
+					this.setAttribute('cy', coordInfo.cursorY);
+					this.setAttribute('r', 0);
+					this.mode = 'create';
+					this.areaId = tempId;
+				]]></body>
+			</method>	
+			
+			<method name="endCreation">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					// wCore.debug('endCreation');
+					this.mode = 'editing';
+					return true;
+				]]></body>
+			</method>	
+			
+			<method name="isValid">
+				<body><![CDATA[
+					var coord = this.getCoord();
+					return coord.r > 0;
+				]]></body>
+			</method>
+			
+			<method name="getAreaInfo">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var coord = this.getCoord();
+					var sc = coordInfo.scale; 
+					return {id: this.areaId, type:'circlearea', 
+						cx: Math.round(coord.cx / sc), 
+						cy: Math.round(coord.cy / sc), 
+						r: Math.round(coord.r / sc)
+					} 
+				]]></body>
+			</method>	
+			
+			<method name="setAreaInfo">
+				<parameter name="areaInfo"/>
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var sc = coordInfo.scale;
+					this.setAttribute('cx', Math.round(parseInt(areaInfo.cx, 10) * sc));
+					this.setAttribute('cy', Math.round(parseInt(areaInfo.cy, 10) * sc));
+					this.setAttribute('r', Math.round(parseInt(areaInfo.r, 10) * sc));
+				]]></body>
+			</method>	
+			
+			
+			<method name="onMouseMoveCreate">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var dx = coordInfo.cursorX -  coordInfo.downX;
+					var dy = coordInfo.cursorY -  coordInfo.downY;
+					var r = Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2))
+					this.setAttribute('r', Math.round(r));
+				]]></body>
+			</method>			
+					
+			<method name="onMouseMovemove">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var dx = coordInfo.cursorX -  coordInfo.downX;
+					var dy = coordInfo.cursorY -  coordInfo.downY;				
+					this.setAttribute('cx', this.initial.cx + dx);
+					this.setAttribute('cy', this.initial.cy + dy);
+					this.updateGrips();				
+				]]></body>
+			</method>
+		
+			<method name="onMouseMovegmr">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var r = this.initial.r + coordInfo.cursorX -  coordInfo.downX;			
+					this.setAttribute('r', r < 0 ? 0 : r);
+					this.updateGrips();				
+				]]></body>
+			</method>
+			
+			<method name="onMouseMovegbm">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var r = this.initial.r + coordInfo.cursorY -  coordInfo.downY;			
+					this.setAttribute('r', r < 0 ? 0 : r);
+					this.updateGrips();				
+				]]></body>
+			</method>
+			
+			<method name="onMouseMovegml">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var r = this.initial.r - (coordInfo.cursorX - coordInfo.downX);
+					this.setAttribute('r', r < 0 ? 0 : r);
+					this.updateGrips();				
+				]]></body>
+			</method>			
+
+			<method name="onMouseMovegtm">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var r = this.initial.r - (coordInfo.cursorY -  coordInfo.downY);
+					this.setAttribute('r', r < 0 ? 0 : r);
+					this.updateGrips();				
+				]]></body>
+			</method>	
+									
+    	</implementation>
+    </binding> 
+    
+    <binding id="polygonarea" extends="modules.mapping.cMappingEditor#genericarea">
+    	<content>
+    		<svg:polygon anonid="svg-polygone" stroke="black" stroke-width="1px" fill="blue" opacity="0.5" xbl:inherits="style, points, stroke, stroke-width, fill" />
+    	</content>
+    	
+    	<implementation>
+    		<field name="initial">null</field>
+    		<field name="svgPolygone">null</field>	
+    		
+    		<constructor><![CDATA[
+    			this.svgPolygone = document.getAnonymousElementByAttribute(this, 'anonid', 'svg-polygone');		
+			]]></constructor>
+					
+    		<method name="getCoord">
+				<body><![CDATA[
+					var points = this.svgPolygone.points;
+					var coord = []					
+				  	for (var i = 0; i < points.numberOfItems; i++)
+					{
+		            	coord.push([0 + points.getItem(i).x, 0 + points.getItem(i).y]);
+		          	}
+			        return coord;
+				]]></body>
+			</method>
+			
+    		<method name="transformCoordToPointsAttr">
+    			<parameter name="coord"/>
+				<body><![CDATA[
+					var attr = [];				
+				  	for (var i = 0; i < coord.length; i++)
+					{
+		            	attr.push(coord[i].join(','));
+		          	}
+			        return attr.join(' ');
+				]]></body>
+			</method>
+			
+    		<method name="getPointIndex">
+    			<parameter name="coord"/>
+    			<parameter name="cursorPos"/>
+				<body><![CDATA[
+					for (var i = 0; i < coord.length; i++)
+					{
+						var [x, y] = coord[i];
+						if (Math.sqrt(Math.pow(cursorPos.cursorX - x, 2) + Math.pow(cursorPos.cursorY - y, 2)) < 5)
+						{
+							return i;
+						}
+					}
+					return -1;
+				]]></body>
+			</method>
+			
+    		<method name="isInGrip">
+    			<parameter name="grip"/>
+    			<parameter name="cursorPos"/>
+				<body><![CDATA[
+					var x = parseInt(grip.getAttribute('cx'), 10);
+					var y = parseInt(grip.getAttribute('cy'), 10);
+					var r = parseInt(grip.getAttribute('r'), 10);
+					return(Math.sqrt(Math.pow(cursorPos.cursorX - x, 2) + Math.pow(cursorPos.cursorY - y, 2)) < r)
+				]]></body>
+			</method>			
+		
+			<method name="startCreation">
+				<parameter name="coordInfo"/>
+				<parameter name="tempId"/>
+				<body><![CDATA[
+					// wCore.debug('startCreation');
+					this.mode = 'create';
+					this.areaId = tempId;
+					try {
+						var grip = this.createGrippy('gmp');
+						grip.setAttribute('anonid', this.areaId + '_0_m');
+						grip.setAttribute('cx', coordInfo.cursorX);
+						grip.setAttribute('cy', coordInfo.cursorY);
+						grip.setAttribute('fill', 'red');
+					} catch (e) {wCore.error('startCreation', [coordInfo, tempId], e)}
+				]]></body>
+			</method>	
+			
+   			<method name="createGrips">
+				<body><![CDATA[				
+					var nbgrips = this.svgPolygone.points.numberOfItems;
+					for (var i = 0; i < nbgrips; i++)
+					{
+						var grip = this.createGrippy('gmp');
+						grip.setAttribute('anonid', this.areaId + '_' + i + '_m');
+						/*
+						var grip = this.createGrippy('gip');
+						grip.setAttribute('anonid', this.areaId + '_' + i + '_i');
+						*/
+					}
+					this.updateGrips();					
+				]]></body>
+			</method>
+			
+   			<method name="updateGrips">
+				<body><![CDATA[				
+					var c  = this.getCoord();
+					var nbs = c.length;
+					for (var i = 0; i < this.grips.length; i++)
+					{	
+						var grip = this.grips[i];
+						var [,s,t] = grip.getAttribute('anonid').split('_');
+						s = parseInt(s, 10);
+						if (s < c.length)
+						{
+							if (t == 'm')
+							{
+								var [x, y] = c[s];
+								grip.setAttribute('cx', x);
+								grip.setAttribute('cy', y);
+							}
+							else
+							{
+								var p1 = c[s];
+								var p2 = c[s+1 == c.length ? 0 : s+1]
+								grip.setAttribute('cx', (p1[0] + p2[0]) / 2);
+								grip.setAttribute('cy', (p1[1] + p2[1]) / 2);
+							}
+						}
+					}				
+				]]></body>
+			</method>
+			
+			<method name="onMouseMovemove">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var dx = coordInfo.cursorX -  coordInfo.downX;
+					var dy = coordInfo.cursorY -  coordInfo.downY;	
+					var coord = [];			
+					for (var i = 0; i < this.initial.length; i++)
+					{
+						var [x, y] = this.initial[i];
+						coord.push([Math.round(Math.max(0, x + dx)), Math.round(Math.max(0, y + dy))].join(','));
+					}
+					this.setAttribute('points', coord.join(' '));
+					this.updateGrips();				
+				]]></body>
+			</method>			
+			
+			<method name="onMouseMoveCreate">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var coord = [[coordInfo.downX, coordInfo.downY].join(','), [coordInfo.cursorX, coordInfo.cursorY].join(',')];
+					this.setAttribute('points', coord.join(' '));
+				]]></body>
+			</method>
+			
+			<method name="onMouseMovegmp">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var dx = coordInfo.cursorX -  coordInfo.downX;
+					var dy = coordInfo.cursorY -  coordInfo.downY;
+					var [,index,] = this.currentGrip.getAttribute('anonid').split('_');
+					index = parseInt(index, 10);
+					
+					var coord = [];			
+					for (var i = 0; i < this.initial.length; i++)
+					{
+						if (i == index)
+						{
+							var [x, y] = this.initial[i];
+							coord.push([Math.round(Math.max(0, x + dx)), Math.round(Math.max(0, y + dy))].join(','));
+						}
+						else
+						{
+							coord.push(this.initial[i].join(','))
+						}
+						
+					}
+					this.setAttribute('points', coord.join(' '));
+					this.updateGrips();	
+				]]></body>
+			</method>			
+
+			<method name="endCreation">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[		
+					// wCore.debug('endCreation:' +  this.grips.length + ' : ' + this.getAttribute('points'));		
+					var inStartGrip = this.isInGrip(this.grips[0], coordInfo);
+					if (inStartGrip && this.grips.length > 2)
+					{
+						this.unselect();
+						this.mode = 'editing';
+						return true;
+					}
+					else if (!inStartGrip)
+					{
+						var grip = this.createGrippy('gmp');
+						grip.setAttribute('anonid', this.areaId + '_' + (this.grips.length - 1) +'_m');
+						grip.setAttribute('cx', coordInfo.cursorX);
+						grip.setAttribute('cy', coordInfo.cursorY);					
+					}
+					
+					var coord = [];
+					for (var i = 0; i < this.grips.length; i++)
+					{
+						coord.push([this.grips[i].getAttribute('cx'), this.grips[i].getAttribute('cy')].join(','));
+					}
+					this.setAttribute('points', coord.join(' '));
+					return false;
+				]]></body>
+			</method>
+			
+			<method name="isValid">
+				<body><![CDATA[
+					var coord = this.getCoord();
+					return coord.length > 2;
+				]]></body>
+			</method>
+			
+			<method name="getAreaInfo">
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var coord = this.getCoord();
+					var sc = coordInfo.scale; 
+					var points = [];
+					for (var i = 0; i < coord.length; i++)
+					{
+						var [x, y] = coord[i];
+						points.push([Math.round(x / sc), Math.round(y / sc)].join(','));
+						
+					}
+					return {id: this.areaId, type:'polygonarea', 
+						points: points.join(' ')
+					} 
+				]]></body>
+			</method>	
+			
+			<method name="setAreaInfo">
+				<parameter name="areaInfo"/>
+				<parameter name="coordInfo"/>
+				<body><![CDATA[
+					var sc = coordInfo.scale;
+					var ops = areaInfo.points.split(' ');
+					var points = [];
+					for (var i =0; i < ops.length; i++)
+					{
+						var [x, y] = ops[i].split(',');
+						points.push([Math.round(parseInt(x, 10) * sc), Math.round(parseInt(y, 10) * sc)].join(','));
+					}
+					this.setAttribute('points', points.join(' '));
+				]]></body>
+			</method>	
+		</implementation>    	
+    </binding>    
+    
+    <binding id="careaeditorpanel" extends="layout.cDocumentEditor#cDocumentEditorPanel">
+		<content>
+			<xul:vbox flex="1">
+				<xul:cmessageinfo anonid="message" />
+				<xul:hbox anonid="action-bar">
+					<xul:button anonid="save_properties" oncommand="saveProperties()" label="&amp;modules.uixul.bo.doceditor.button.Save;" image="{{HttpHost}}/icons/small/save.png"/>
+					<xul:button anonid="reset_properties" oncommand="resetProperties()" label="&amp;modules.uixul.bo.doceditor.button.Canceledit;" image="{{HttpHost}}/icons/small/undo.png"/>
+				</xul:hbox>
+				<xul:spacer height="5" />
+				<xul:mappingeditor anonid="mappingeditor" editheight="600" editwidth="800" flex="1"/>
+			</xul:vbox>
+		</content>
+		<implementation>
+			<field name="initalValue">null</field>
+			
+			<method name="getInitializeParameters">
+				<body><![CDATA[
+					this.initalValue = null;
+					return {
+						action: 'LoadAreasPanel',
+						cmpref: this.documentEditor.documentid, 
+						lang : this.documentEditor.documentInfos.vo
+					};
+				]]></body>
+			</method>
+												
+			<method name="fireInitializeComplete">
+				<parameter name="result" />
+				<body><![CDATA[
+					this.initalValue = result.contents;
+					var mapedt = document.getAnonymousElementByAttribute(this, 'anonid', 'mappingeditor');
+					mapedt.setImage(this.initalValue.imageInfo);
+					mapedt.setZones(this.initalValue.zonesInfo);
+					this.mInitialized = true;
+					this.fireEvent("panelInitializeComplete");
+					this.gotoTop();
+				]]></body>
+			</method>
+			
+			<method name="resetProperties">
+				<body><![CDATA[
+					var mapedt = document.getAnonymousElementByAttribute(this, 'anonid', 'mappingeditor');
+					mapedt.setZones(this.initalValue.zonesInfo);
+					this.gotoTop();
+				]]></body>
+			</method>
+			
+			<method name="saveProperties">
+				<body><![CDATA[
+					this.documentEditor.executeServerAction('areaeditor', 'SaveAreasPanel');
+				]]></body>
+			</method>
+			
+			<method name="getSaveAreasPanelParameters">
+				<body><![CDATA[
+					var mapedt = document.getAnonymousElementByAttribute(this, 'anonid', 'mappingeditor');
+									 
+					var attributes = {
+						action: 'SaveAreasPanel',
+						cmpref: this.documentEditor.documentid, 
+						lang : this.documentEditor.documentInfos.vo,
+						zonesInfo: wCore.stringifyJSON(mapedt.getZones())
+					};
+					return attributes;
+				]]></body>
+			</method>
+			
+			<method name="fireSaveAreasPanelComplete">
+				<parameter name="result" />
+				<body><![CDATA[			
+					if (result.status == "OK")
+					{					
+						this.documentEditor.clearTabs();
+						this.initalValue = result.contents;
+						
+						var mapedt = document.getAnonymousElementByAttribute(this, 'anonid', 'mappingeditor');
+						mapedt.setZones(this.initalValue.zonesInfo);
+					}
+					else
+					{
+						this.showErrorMessage(result.contents.errorMessage);					
+					}
+				]]></body>
+			</method>
+		</implementation>
+	</binding>
+	
+	<binding id="czonesinfolist"  extends="form.cField#cAbstractField">
+		<implementation>
+			<field name="mValue">null</field>
+			<field name="mSortOnColId">null</field>
+					
+			<method name="setInitialValue">
+				<parameter name="val" />
+				<body><![CDATA[
+					var fval = this.fixString(val);
+					this.setAttribute("initialvalue", fval);
+					if (fval != '')
+					{
+						this.mValue = wCore.parseJSON(fval);
+					}
+					else
+					{
+						this.mValue = null;
+					}
+					this.onLoad();
+				]]></body>
+			</method>
+			
+			<property name="value">
+				<getter><![CDATA[
+					if (this.mValue != null)
+					{
+						return wCore.stringifyJSON(this.mValue);
+					}
+					return '';
+				]]></getter>
+				<setter><![CDATA[
+					var fval = this.fixString(val);
+					if (fval != '')
+					{
+						this.mValue = wCore.parseJSON(fval);
+					}
+					else
+					{
+						this.mValue = null;
+					}
+					this.onLoad();
+				]]></setter>
+			</property>
+						
+			<method name="reset">
+				<body><![CDATA[
+					this.setInitialValue(this.initialvalue);
+				]]></body>
+			</method>
+				
+			<constructor><![CDATA[
+				this.setAttribute("valid", "true");
+				this.setInitialValue(this.initialvalue);
+			]]></constructor>
+	
+			<method name="valueChanged">
+				<body><![CDATA[
+					this.dispatchFieldEvent('fieldChanged');
+					if (this.initialvalue != this.value)
+					{
+						if (!this.modified) 
+						{
+							this.setAttribute("modified", "true");
+							this.dispatchFieldEvent('fieldModified');
+						}
+					}
+					else
+					{
+						if (this.modified) 
+						{
+							this.removeAttribute("modified");
+							this.dispatchFieldEvent('fieldRestored');
+						}			
+					}
+				]]></body>
+			</method>
+			
+			<method name="focus">
+				<body><![CDATA[
+					// wCore.debug(wCore.getStackText());
+				]]></body>
+			</method>			
+		
+			<method name="cleanList">
+				<body><![CDATA[
+					var rows = this.getElementByAnonId('document-rows');
+					while (rows.lastChild && rows.lastChild.getAttribute('class') != 'head')  
+					{
+						rows.removeChild(rows.lastChild);
+					}
+				]]></body>
+			</method>
+			
+				
+			<method name="onLoad">
+				<body><![CDATA[
+					this.cleanList();
+					if (this.mValue != null)
+					{
+						if (this.mSortOnColId)
+						{
+							var col = this.getElementByAnonId(this.mSortOnColId);
+							this.orderRows(col.getAttribute('sortonfield'), col.getAttribute('sortDirection'));
+						}
+					
+						for (var i = 0; i < this.mValue.zones.length; i++)
+						{
+							var item = this.mValue.zones[i];
+							this.addItem(item);
+						}
+					}
+				]]></body>
+			</method>				
+
+			<method name="orderRows">
+				<parameter name="fieldName" />
+				<parameter name="direction" />
+				<body><![CDATA[
+				
+				 var asc = direction === "asc";
+				 var name = fieldName;
+				 this.mValue.versions.sort(function(a, b) {
+				 	if (a[name] == b[name])
+				 	{
+				 		return 0;
+				 	} 
+				 	else if (a[name] < b[name])
+				 	{
+				 		return asc ? -1 : 1;
+				 	}
+				 	else
+				 	{
+				 		return asc ? 1 : -1;
+				 	}
+				 });
+				]]></body>
+			</method>	
+								
+			<method name="addItem">
+				<parameter name="jsnode" />
+				<body><![CDATA[
+					var row = document.createElement('row');
+					row.setAttribute('class', 'document');
+					row.setAttribute('documentId', jsnode.id);
+					row.setAttribute('publicationstatus', jsnode.publicationstatus);
+					 
+					var cell = row.appendChild(document.createElement('label'));
+					cell.setAttribute('value', jsnode.label);
+					
+					cell = row.appendChild(document.createElement('label'));
+					cell.setAttribute('value', jsnode.form);
+					
+					cell = row.appendChild(document.createElement('label'));
+					cell.setAttribute('value', jsnode.href);
+
+					cell = row.appendChild(document.createElement('label'));
+					cell.setAttribute('value', jsnode.status);
+					
+					cell = row.appendChild(document.createElement('toolbar'));
+					cell.setAttribute('class', 'actions');
+					var button = cell.appendChild(document.createElement('toolbarbutton'));
+					button.setAttribute('action', 'edit');
+					button.setAttribute('documentId', jsnode.id);
+					button.setAttribute('image', '{HttpHost}/icons/small/edit.png');
+					button.setAttribute('label', "&modules.uixul.bo.actions.Edit;");
+
+					this.getElementByAnonId('document-rows').appendChild(row);
+				]]></body>
+			</method>
+			
+			<method name="handleSort">
+				<parameter name="node" />
+				<body><![CDATA[
+					if (node.getAttribute('anonid') == this.mSortOnColId)
+					{
+						var dir = (node.getAttribute('sortDirection') == 'asc') ? 'desc' : 'asc';
+						node.setAttribute('sortDirection', dir);
+					}
+					else
+					{
+						if (this.mSortOnColId)
+						{
+							this.getElementByAnonId(this.mSortOnColId).removeAttribute('sortDirection');
+						}
+						this.mSortOnColId = node.getAttribute('anonid');
+						node.setAttribute('sortDirection', 'asc');
+					}
+					this.onLoad();
+				]]></body>
+			</method>
+			
+
+			<method name="edit">
+				<parameter name="id" />
+				<body><![CDATA[
+					var uri = ['mapping', 'openDocument', 'modules_mapping_area', id, 'properties'].join(',');
+					openActionUri(uri);
+				]]></body>
+			</method>
+						
+			<method name="getPanel">
+				<body><![CDATA[	
+					var pnode = this.parentNode;
+					while (pnode && !pnode.mDocumentId) {pnode = pnode.parentNode;}
+					return pnode;				
+				]]></body>
+			</method>
+		</implementation>
+		<handlers>		
+			<handler event="command"><![CDATA[
+				var target = event.originalTarget;
+				if (target.localName == 'toolbarbutton' && target.hasAttribute('action'))
+				{
+					switch (target.getAttribute('action'))
+					{						
+						case 'edit':
+							this.edit(target.getAttribute('documentId'));
+							break;
+					}
+					return;
+				}
+			]]></handler>
+			
+			<handler event="click" button="0" clickcount="1"><![CDATA[
+				var target = event.originalTarget;
+				if (target.localName == 'label' && target.hasAttribute('sortonfield'))
+				{
+					this.handleSort(target);
+					return;
+				}
+			]]></handler>
+		</handlers>	
+		<resources>
+			<stylesheet src="modules.uixul.cEditorGrid" />
+		</resources>		
+		<content>
+			<xul:vbox flex="1">
+					<xul:grid flex="1">
+						<xul:columns>
+							<xul:column flex="3" />
+							<xul:column flex="1" />
+							<xul:column flex="3" />
+							<xul:column flex="1" />
+							<xul:column />
+						</xul:columns>
+						<xul:rows anonid="document-rows">
+							<xul:row class="head">
+								<xul:label sortonfield="label" anonid="label" value="Libellé" />
+								<xul:label sortonfield="form" anonid="formColumn" value="Forme" />
+								<xul:label sortonfield="href" anonid="hrefColumn" value="Lien" />
+								<xul:label sortonfield="status" anonid="statusColumn" value="Etat" />
+								<xul:label anonid="actionsColumn" value="Actions" />
+							</xul:row>
+						</xul:rows>
+					</xul:grid>
+				<children/>
+			</xul:vbox>		
+		</content>	
+	</binding>
+</bindings>

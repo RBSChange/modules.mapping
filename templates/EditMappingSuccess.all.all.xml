@@ -1,0 +1,375 @@
+<?xml version="1.0"?>
+<span tal:replace="docType" />
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<style tal:replace="cssInclusion" />
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:mozdraw="http://www.nexgenmedia.net/mozdraw/1.0"
+      xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+  <script tal:replace="scriptInclusion" />
+
+  <script type="text/javascript">
+  <![CDATA[
+		var areaArray = new Array();
+		
+		//for polygon tracing
+		var polygonConstruction = false;
+		var firstPointX = null;
+		var firstPointY = null;
+		firstpoint = false;
+		var nbPoints = 0;
+		var lastPoint = false;
+		var deleteFirstPoint = false;
+		
+		var mModule = null;
+		
+		// for dragging control point on polygon
+		var controlDragging = false;
+		
+		//resizing
+		var elementResized = null;
+		
+		var dragElm;
+		var dragType = null;
+		
+		const SVG_NS = "http://www.w3.org/2000/svg";
+		
+		var gXCanvasOffset = 0;
+		var gYCanvasOffset = 0;
+		
+		var currElm = null;
+		
+		var gContainer = null
+		
+		function initContainer()
+		{
+		  var elm = document.createElement("elementContainer");
+		  elm.setAttribute("id", "elementContainer");
+		  elm.setAttribute("for", "root");
+		}
+		
+		function getModule()
+		{
+			if (mModule === null)
+			{
+				mModule = parent.document.getElementById("wmodule_mapping");
+			}
+			return mModule;
+		}
+		
+		function mozDraw()
+		{
+		  this.ui = new mdUserIterface();
+		  this.canvas = new mdCanvas(this.ui);
+		}
+		
+		var gMozDraw;
+		
+		function getRootCanvas()
+		{
+			var elements = document.getElementsByTagName('mappingcanvas');
+			return elements[0];
+		}
+		
+		function mdInit(pictureHeight, pictureWidth)
+		{
+			try
+			{
+				
+		
+			//set the size of canvas to the picture size
+			var rootCanvas = getRootCanvas();
+		
+			if (!rootCanvas || (typeof rootCanvas.hideControls != "function"))
+			{
+				window.setTimeout(function (_pictureHeight, _pictureWidth) { mdInit(_pictureHeight, _pictureWidth); }, 500, pictureHeight, pictureWidth);
+				return;
+			}
+		
+			rootCanvas.height= pictureHeight;
+			rootCanvas.width= pictureWidth;
+		
+		  	gMozDraw = new mozDraw();
+		
+		  	//initialize an array with all the existing area for the mapping
+		  	mappingboxes = document.getElementsByTagName("mappingbox");
+		  	for (run = 0; run < mappingboxes.length; run ++)
+		  	{
+		  		oneBoxe = mappingboxes.item(run);
+		  		areaArray.push({ id: oneBoxe.getAttribute("id"), element: oneBoxe});
+		  	}
+		
+		  	mappingcircles = document.getElementsByTagName("mappingcircle");
+		  	for(run = 0; run < mappingcircles.length; run ++)
+		  	{
+		  		oneCircle = mappingcircles.item(run);
+		  		areaArray.push({ id: oneCircle.getAttribute("id"), element: oneCircle});
+		  	}
+		
+		  	mappingpolys = document.getElementsByTagName("mappingpolygon");
+		  	for(run = 0; run < mappingpolys.length; run ++)
+		  	{
+		  		onePoly = mappingpolys.item(run);
+		  		areaArray.push({ id: onePoly.getAttribute("id"), element: onePoly});
+		  	}
+		
+		  	var module = getModule();
+		  	
+		  	if (module.getElementById("mapping-label") && gMappingLabel)
+		    {
+		  		module.getElementById("mapping-label").setAttribute("value", gMappingLabel);
+		    }
+		
+		  	module.areaInMapping = areaArray;
+		  	module.theRoot = rootCanvas;
+		  	rootCanvas.hideControls();
+		 
+			updateBlocker(false);
+			
+			module.getElementById("mappingboxbutton").removeAttribute("disabled");
+			module.getElementById("mappingboxbutton").setAttribute("checked", "false");
+			module.getElementById("mappingcirclebutton").removeAttribute("disabled");
+			module.getElementById("mappingcirclebutton").setAttribute("checked", "false");
+			module.getElementById("mappingpolygonbutton").removeAttribute("disabled");
+			module.getElementById("mappingpolygonbutton").setAttribute("checked", "false");
+			module.getElementById("cancelbutton").setAttribute("disabled", "true");
+			
+			}
+			catch (e)
+			{
+				alert(e.message);
+			}
+		}
+		
+		
+		function mdCanvas(aUI)
+		{
+		    var rootCanvas = getRootCanvas();
+		
+		    gXCanvasOffset = rootCanvas.parentNode.offsetLeft;
+		    gYCanvasOffset = rootCanvas.parentNode.offsetTop;
+		
+		    this.ui = aUI;
+		
+		    this.selectElement(null);
+		}
+		
+		mdCanvas.prototype.selectElement = function(aElement)
+		{
+		  currElm = aElement;
+		}
+		
+		// grid UI
+		function mdUserIterface()
+		{
+		
+		}
+		
+		mdUserIterface.prototype.setItemValue = function (aName, aValue)
+		{
+		  var elm = document.getElementById("sel-" + aName);
+		  if (elm)
+		  {
+		    if (elm.tagName == "td")
+		    {
+		      elm.textContent = aValue;
+		    }
+		    else if (elm.tagName == "input")
+		    {
+		      elm.value = aValue;
+		    }
+		  }
+		}
+		
+		// BUTTON
+		
+		function setNewElm(aType, aButton)
+		{
+			var rootCanvas = getRootCanvas();
+		  	aButton.className = "selected";
+		  	rootCanvas.isAddingNewElement = false;
+		  	rootCanvas.newElmToAdd = aType;
+		}
+
+ 
+		var newElement = null;
+
+		var gMappingLabel = "${documentLabel}";
+
+		function getController()
+		{
+		    return parent.document.getElementById('wcontroller');
+		}
+
+		function getBlocker()
+		{
+		    return document.getElementById("blocker");
+		}
+
+		function updateBlocker(visible, text)
+		{
+		    var blocker = getBlocker();
+		    if (visible)
+		    {
+			    blocker.style.visibility = "visible";
+			    if (text)
+			    {
+			        blocker.firstChild.innerHTML = text;
+			    }
+		    }
+		    else
+		    {
+		        blocker.style.visibility = "hidden";
+		    }
+		}
+
+        function getTooltip()
+		{
+		    return document.getElementById("tooltip");
+		}
+
+		function updateTooltip(visible, x, y, text)
+		{
+		    var tooltip = getTooltip();
+		    if (visible)
+		    {
+			    tooltip.style.visibility = "visible";
+			    if (x)
+			    {
+			        tooltip.style.left = parseInt(x) + "px";
+			    }
+			    if (y)
+			    {
+			        tooltip.style.top = parseInt(y) + "px";
+			    }
+			    if (text)
+			    {
+			        tooltip.innerHTML = text;
+			    }
+		    }
+		    else
+		    {
+		        tooltip.style.visibility = "hidden";
+		    }
+		}
+
+		// Call createArea method to crete the area document
+		function createArea(shape, xshape, yshape, widthrect, heightrect, rcircle, points, shapeElement)
+		{
+		    if (getModule().areaInMapping.length)
+		    {
+		        var areaNb = getModule().areaInMapping.length + 1;
+		    }
+		    else
+		    {
+		        var areaNb = 1;
+		    }
+			controler =   getController();
+			newArea = shapeElement;
+            updateBlocker(true);
+		  	controler.execute(
+				"${savingLabel}",   // the action label
+				this,              // the sender object (this)
+				'mapping',        // the module name
+				'CreateArea',         // the action name
+				{
+					shape: shape,
+					xshape: xshape,
+					yshape: yshape,
+					widthrect: widthrect,
+					heightrect: heightrect,
+					rcircle : rcircle,
+					points: points,
+					parentId: ${componentId},
+					areaNb : areaNb
+				}
+			);
+		}
+
+		//when CreateArea method is on success
+		function onCreateAreaSuccess(result)
+		{
+			// get ID new area : docId
+			var areaId = result.id;
+
+			// get the id to the new area
+			newArea.setAttribute("id", areaId);
+
+			// add the new element area in the global array "areaInMapping"
+			getModule().areaInMapping.push({ id: areaId, element: newArea});
+
+			newArea = null;
+			var module = getModule();
+
+			//refresh the list of areas
+			areasList = module.getElementById("areaList");
+			areasList.refresh();
+			updateBlocker(false);
+			module.getElementById("mappingboxbutton").removeAttribute("disabled");
+			module.getElementById("mappingcirclebutton").removeAttribute("disabled");
+			module.getElementById("mappingpolygonbutton").removeAttribute("disabled");
+			module.getElementById("mappingboxbutton").setAttribute("checked", "false");
+			module.getElementById("mappingcirclebutton").setAttribute("checked", "false");
+			module.getElementById("mappingpolygonbutton").setAttribute("checked", "false");
+			module.getElementById("cancelbutton").setAttribute("disabled", "true");
+			module.theRoot.hideControls();
+		}
+
+		//Call the UpdateArea class when an area is moved or resized
+		function updateArea(shape, idshape, xshape, yshape, widthrect, heightrect, rcircle, points)
+		{
+			if (idshape != null && idshape != '')
+			{
+				controler =   getController();
+	            updateBlocker(true);
+			  	controler.execute(
+					"${updatingLabel}",   // the action label
+					this,              // the sender object (this)
+					'mapping',        // the module name
+					'UpdateArea',         // the action name
+					{
+						shape: shape,
+						xshape: xshape,
+						yshape: yshape,
+						widthrect: widthrect,
+						heightrect: heightrect,
+						rcircle : rcircle,
+						points: points,
+						shapeId: idshape
+	
+					}
+				);
+			}
+		}
+
+		function onUpdateAreaSuccess(result)
+		{
+			updateBlocker(false);
+		}
+	]]>
+</script>
+
+</head>
+
+<body tal:attributes="onload onInit">
+
+  <div tal:attributes="style pictureURL" id="root-canvas">
+    <mappingcanvas id="root" tal:attributes="height pictureSize/height; width pictureSize/width;" overflow="visible">
+	 <span tal:repeat="area areasToDisplay" tal:omit-tag="" >
+		<span tal:replace="area" />
+	 </span>
+    </mappingcanvas>
+  </div>
+
+  <div id="tooltip" class="tooltip"> </div>
+
+  <div id="blocker" class="blocker">
+         <div class="blocker-content" i18n:translate="&modules.mapping.bo.general.tooltip.BlockerEllipsis;"/>
+  </div>
+
+</body>
+</html>
