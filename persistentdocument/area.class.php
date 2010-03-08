@@ -11,9 +11,9 @@ class mapping_persistentdocument_area extends mapping_persistentdocument_areabas
 	function getHref()
 	{
 		$resource = $this->getResource();
-		if ($resource !== null && method_exists($resource, 'getUrl'))
+		if ($resource !== null)
 		{
-			return $resource->getUrl();
+			return LinkHelper::getDocumentUrl($resource);
 		}
 		return $this->getUrl();
 	}
