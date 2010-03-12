@@ -38,6 +38,7 @@
 		<model name="modules_mapping/mapping">
 			<contextactions>
 				<contextaction name="edit" />
+				<contextaction name="delete" />		
 				<contextaction name="activate" />
 				<contextaction name="deactivated" />
 				<contextaction name="reactivate" />
