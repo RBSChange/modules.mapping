@@ -14,7 +14,7 @@ toolbar toolbarbutton label{
 	font-family: arial, helvetica, sans-serif;
 }
 html{
-	background: url(/icons/admin/void.gif) ghostwhite;
+	background: url(/changeicons/admin/void.gif) ghostwhite;
 	cursor: crosshair;
 }
 body{

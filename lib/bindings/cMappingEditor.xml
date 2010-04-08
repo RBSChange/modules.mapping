@@ -1182,8 +1182,8 @@
 			<xul:vbox flex="1">
 				<xul:cmessageinfo anonid="message" />
 				<xul:hbox anonid="action-bar">
-					<xul:button anonid="save_properties" oncommand="saveProperties()" label="&amp;modules.uixul.bo.doceditor.button.Save;" image="{{HttpHost}}/icons/small/save.png"/>
-					<xul:button anonid="reset_properties" oncommand="resetProperties()" label="&amp;modules.uixul.bo.doceditor.button.Canceledit;" image="{{HttpHost}}/icons/small/undo.png"/>
+					<xul:button anonid="save_properties" oncommand="saveProperties()" label="&amp;modules.uixul.bo.doceditor.button.Save;" image="{IconsBase}/small/save.png"/>
+					<xul:button anonid="reset_properties" oncommand="resetProperties()" label="&amp;modules.uixul.bo.doceditor.button.Canceledit;" image="{IconsBase}/small/undo.png"/>
 				</xul:hbox>
 				<xul:spacer height="5" />
 				<xul:mappingeditor anonid="mappingeditor" editheight="600" editwidth="800" flex="1"/>
@@ -1427,7 +1427,7 @@
 					var button = cell.appendChild(document.createElement('toolbarbutton'));
 					button.setAttribute('action', 'edit');
 					button.setAttribute('documentId', jsnode.id);
-					button.setAttribute('image', '{HttpHost}/icons/small/edit.png');
+					button.setAttribute('image', '{IconsBase}/small/edit.png');
 					button.setAttribute('label', "&modules.uixul.bo.actions.Edit;");
 
 					this.getElementByAnonId('document-rows').appendChild(row);
