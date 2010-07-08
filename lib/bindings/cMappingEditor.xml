@@ -220,7 +220,14 @@
 				<parameter name="area"/>
 				<body><![CDATA[
 					this.currentArea = area;
-					if ('startCreation' in area) {area.startCreation(this.coordInfo, this.getTempAreaId());}
+					if ('startCreation' in area) 
+					{
+						area.startCreation(this.coordInfo, this.getTempAreaId());
+					}
+					else
+					{
+						wCore.debug("Binding area not complete!");
+					}
 					this.updateAreaStatusInfo(area);					
 				]]></body>
 			</method>					
@@ -237,7 +244,12 @@
 				var me = this;
 				this.svgDocument.addEventListener('mousemove', function(event) {me.onMouseMove(event)}, true);			
 				this.svgDocument.addEventListener('mousedown', function(event) {me.onMouseDown(event)}, false);
-				this.svgDocument.addEventListener('mouseup', function(event) {me.onMouseUp(event)}, false);					
+				this.svgDocument.addEventListener('mouseup', function(event) {me.onMouseUp(event)}, false);		
+				
+				
+				this.createNewAreaElement('rectarea');
+				this.createNewAreaElement('circlearea');
+				this.createNewAreaElement('polygonarea');
 			]]></constructor>
 			
 			<method name="initContextMenu">
@@ -305,9 +317,6 @@
 					
 					this.setAttribute("editwidth", Math.round(this.coordInfo.editWidth));
 					this.setAttribute("editheight", Math.round(this.coordInfo.editHeight));
-					wCore.debug(wCore.dump(this.imageInfo));
-					wCore.debug(wCore.dump(this.coordInfo));
-		
 				]]></body>
 			</method>	
 			
@@ -406,7 +415,6 @@
 				<body><![CDATA[
 					if (this.mode == 'create')
 					{
-						// wCore.debug('onMouseDown:create');
 						if (!this.currentArea) 
 						{
 							var area = this.createNewAreaElement(this.createtype);
@@ -426,7 +434,6 @@
 			<method name="onMouseUp">
 				<parameter name="event"/>
 				<body><![CDATA[
-					// wCore.debug('onMouseUp: ' + event.originalTarget.localName);
 					this.editaction = '';
 					this.coordInfo.dragging = false;
 					if (this.mode == 'create')
@@ -464,7 +471,6 @@
 			
 			<method name="beginDrag">
 				<body><![CDATA[
-					// wCore.debug('beginDrag');
 					this.initial = this.getCoord();
 				]]></body>
 			</method>
@@ -533,7 +539,6 @@
  			<method name="onMouseDown">
 				<parameter name="event"/>
 				<body><![CDATA[
-					// wCore.debug('genericarea:onMouseDown: ' + event.originalTarget.localName);
 					this.currentGrip = null;
 					this.beginDrag();
 					this.getMappingEditor().onAreaMouseDown(event, this, 'move');
@@ -545,7 +550,6 @@
 				<parameter name="event"/>
 				<body><![CDATA[
 					var updateAction = event.originalTarget.getAttribute('name');
-					// wCore.debug('genericarea:onGrippyMouseDown: ' + updateAction);
 					this.currentGrip = event.originalTarget;
 					this.beginDrag();
 					this.getMappingEditor().onAreaMouseDown(event, this, updateAction);
@@ -622,7 +626,6 @@
 				<parameter name="coordInfo"/>
 				<parameter name="tempId"/>
 				<body><![CDATA[
-					// wCore.debug('startCreation');
 					this.setAttribute('x', coordInfo.cursorX);
 					this.setAttribute('y', coordInfo.cursorY);
 					this.setAttribute('width', '0');
@@ -635,7 +638,6 @@
 			<method name="endCreation">
 				<parameter name="coordInfo"/>
 				<body><![CDATA[
-					// wCore.debug('endCreation');
 					this.mode = 'editing';
 					return true;
 				]]></body>
@@ -818,7 +820,6 @@
 				<parameter name="coordInfo"/>
 				<parameter name="tempId"/>
 				<body><![CDATA[
-					// wCore.debug('startCreation');
 					this.setAttribute('cx', coordInfo.cursorX);
 					this.setAttribute('cy', coordInfo.cursorY);
 					this.setAttribute('r', 0);
@@ -830,7 +831,6 @@
 			<method name="endCreation">
 				<parameter name="coordInfo"/>
 				<body><![CDATA[
-					// wCore.debug('endCreation');
 					this.mode = 'editing';
 					return true;
 				]]></body>
@@ -996,7 +996,6 @@
 				<parameter name="coordInfo"/>
 				<parameter name="tempId"/>
 				<body><![CDATA[
-					// wCore.debug('startCreation');
 					this.mode = 'create';
 					this.areaId = tempId;
 					try {
@@ -1107,8 +1106,7 @@
 
 			<method name="endCreation">
 				<parameter name="coordInfo"/>
-				<body><![CDATA[		
-					// wCore.debug('endCreation:' +  this.grips.length + ' : ' + this.getAttribute('points'));		
+				<body><![CDATA[			
 					var inStartGrip = this.isInGrip(this.grips[0], coordInfo);
 					if (inStartGrip && this.grips.length > 2)
 					{
