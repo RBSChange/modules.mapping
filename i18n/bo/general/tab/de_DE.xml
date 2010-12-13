@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.bo.general.tab" lcid="de_DE">
+  <key id="general">Haupteigenschaften</key>
+  <key id="style">Stile</key>
+  <key id="coords">Daten</key>
+</i18n>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.document.mapping" lcid="en_GB">
+  <key id="edition-form-title">mapping properties</key>
+  <key id="label">name</key>
+  <key id="description">description</key>
+  <key id="picture">picture</key>
+  <key id="label-help">image map name</key>
+  <key id="description-help">image map description</key>
+  <key id="picture-help">drop picture here</key>
+</i18n>

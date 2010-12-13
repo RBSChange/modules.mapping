@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.document.area" lcid="fr_FR">
+  <key id="document-name">zone</key>
+  <key id="label">nom de la zone</key>
+  <key id="description">description</key>
+  <key id="floating">boîte flottante</key>
+  <key id="resource">ressource associée</key>
+  <key id="url">adresse associée</key>
+  <key id="popup">popup</key>
+  <key id="bordercolor">couleur de bordure</key>
+  <key id="borderwidth">épaisseur de bordure</key>
+  <key id="pictogram">pictogramme</key>
+  <key id="label-help">nom permettant d'identifier la zone dans Change. Ce nom sera utilisé comme alternative textuelle par défaut.</key>
+  <key id="description-help">Description de la zone. Utilisée comme alternative textuelle et info-bulle.</key>
+  <key id="floating-help">floating-help</key>
+  <key id="resource-help">choisir parmi les ressources celle qui doit être associée à la zone : un lien menant à la ressource sélectionnée sera appliqué sur la zone</key>
+  <key id="url-help">saisir directement l'adresse Web valide qui doit être associée à la zone : un lien menant à l'adresse saisie sera appliqué sur la zone - ATTENTION : cette adresse n'est
+			prise en compte que si le champ ″ressource associée″ est vide !</key>
+  <key id="popup-help">popup-help</key>
+  <key id="bordercolor-help">bordercolor-help</key>
+  <key id="borderwidth-help">borderwidth-help</key>
+  <key id="pictogram-help">pictogram-help</key>
+  <key id="areabordercolor">couleur de la bordure de la zone</key>
+  <key id="areabordercolor-help">couleur de la bordure de la zone</key>
+  <key id="areabgcolor">couleur de fond de la zone</key>
+  <key id="areabgcolor-help">couleur de fond de la zone</key>
+  <key id="areaopacity">opacité de la couleur de fond</key>
+  <key id="areaopacity-help">valeur : 0-100</key>
+</i18n>

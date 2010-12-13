@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.bo.general" lcid="de_DE">
+  <key id="module-name">Reaktivbilder</key>
+  <key id="tree-root-name">Reaktivbilder</key>
+  <key id="system-folder-name">Reaktivbilder</key>
+  <key id="newzone">neue Zone #{count}</key>
+</i18n>

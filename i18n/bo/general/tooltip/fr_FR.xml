@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.bo.general.tooltip" lcid="fr_FR">
+  <key id="circlebegin">cliquez sur l'image pour définir le centre du cercle</key>
+  <key id="circledrawing">maintenez le bouton appuyé et déplacez la souris pour définir le rayon</key>
+  <key id="rectanglebegin">cliquez sur l'image pour définir le point de départ du rectangle</key>
+  <key id="rectangledrawing">maintenez le bouton appuyé et déplacez la souris pour définir le rectangle</key>
+  <key id="polybegin">cliquez sur l'image pour définir le point de départ du polygone, puis relâchez le bouton</key>
+  <key id="polydrawing">cliquez ailleurs pour définir le point suivant (cliquez sur le point d'origine pour fermer le polygone)</key>
+  <key id="blocker">mise à jour du document en cours,veuillez patienter</key>
+</i18n>

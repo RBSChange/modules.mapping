@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.bo.general" lcid="en_GB">
+  <key id="module-name">image maps</key>
+  <key id="tree-root-name">image maps</key>
+  <key id="system-folder-name">image maps</key>
+  <key id="newzone">new area #{count}</key>
+</i18n>

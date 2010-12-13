@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<localization>
-  <entity id="document-name">
-    <locale lang="fr">zone circulaire</locale>
-    <locale lang="de">kreisförmige Zone</locale>
-  </entity>
-</localization>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.bo.general.tooltip" lcid="de_DE">
+  <key id="circlebegin">Klicken Sie das Bild an, um die Kreismitte zu definieren</key>
+  <key id="circledrawing">halten Sie den Knopf gedrückt und bewegen Sie die Maus, um den Radius zu definieren</key>
+  <key id="rectanglebegin">Klicken Sie das Bild an, um den Ansatzpunkt des Rechtecks zu definieren</key>
+  <key id="rectangledrawing">halten Sie den Knopf gedrückt und bewegen Sie die Maus, um das Rechteck zu definieren</key>
+  <key id="polybegin">Klicken Sie das Bild an, um den Ansatzpunkt des Polygons zu definieren, dann lassen Sie den Knopf los</key>
+  <key id="polydrawing">Klicken Sie anderswo, um den nächsten Punkt zu definieren (klicken Sie auf den Anfangspunkt, um das Polygon zu schliessen)</key>
+  <key id="blocker">Dokument wird aktualisiert,bitte warten</key>
+</i18n>

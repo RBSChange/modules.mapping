@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.document.mapping" lcid="fr_FR">
+  <key id="document-name">image réactive</key>
+  <key id="edition-form-title">propriétés de l'image réactive</key>
+  <key id="label">nom</key>
+  <key id="description">description</key>
+  <key id="picture">image</key>
+  <key id="label-help">nom de l'image réactive</key>
+  <key id="description-help">description de l'image réactive</key>
+  <key id="picture-help">glisser ici l'image à exploiter</key>
+</i18n>

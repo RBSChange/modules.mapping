@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.backoffice" lcid="en_GB">
+  <key id="mapping">image map</key>
+  <key id="area">clickable area</key>
+</i18n>

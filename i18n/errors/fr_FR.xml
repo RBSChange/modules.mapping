@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.errors" lcid="fr_FR">
+  <key id="no-picture-for-mapping">no picture for mapping</key>
+  <key id="modules-mapping-getpreferencesdocument">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Ouvrir les préférences″</key>
+  <key id="modules-mapping-order">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Modifier l'ordre des éléments″</key>
+  <key id="modules-mapping-editmapping">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Editer une image réactive″</key>
+  <key id="modules-mapping-enabled">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Accès au module″</key>
+  <key id="modules-mapping-load-circarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Charger un cercle″</key>
+  <key id="modules-mapping-load-polyarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Charger une zone polygonale″</key>
+  <key id="modules-mapping-load-rectarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Charger un rectangle″</key>
+  <key id="modules-mapping-delete-circarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Supprimer un cercle″</key>
+  <key id="modules-mapping-delete-polyarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Supprimer une zone polygonale″</key>
+  <key id="modules-mapping-delete-rectarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Supprimer un rectangle″</key>
+  <key id="modules-mapping-insert-circarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Insérer un cercle″</key>
+  <key id="modules-mapping-insert-polyarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Insérer une zone polygonale″</key>
+  <key id="modules-mapping-insert-rectarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Insérer un rectangle″</key>
+  <key id="modules-mapping-update-circarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Modifier un cercle″</key>
+  <key id="modules-mapping-update-polyarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Modifier un polygone″</key>
+  <key id="modules-mapping-update-rectarea">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Modifier un rectangle″</key>
+</i18n>

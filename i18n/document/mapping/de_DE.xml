@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.document.mapping" lcid="de_DE">
+  <key id="document-name">reaktives Bild</key>
+  <key id="edition-form-title">Eigenschaften reaktives Bild</key>
+  <key id="label">Name</key>
+  <key id="description">Beschreibung</key>
+  <key id="picture">Bild</key>
+  <key id="label-help">Name reaktives Bild</key>
+  <key id="description-help">Beschreibung reaktives Bild</key>
+  <key id="picture-help">Hier das zu nutzende Bild einfügen</key>
+</i18n>

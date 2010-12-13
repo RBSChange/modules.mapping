@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.document.area" lcid="en_GB">
+  <key id="label">area name</key>
+  <key id="description">description</key>
+  <key id="floating">floating box</key>
+  <key id="resource">related resource</key>
+  <key id="url">related address</key>
+  <key id="popup">popup</key>
+  <key id="bordercolor">border color</key>
+  <key id="borderwidth">bordeur width</key>
+  <key id="pictogram">pictogram</key>
+  <key id="label-help">name used in Change. This name will be used for default textual alternative</key>
+  <key id="description-help">textual alternative and tooltip</key>
+  <key id="floating-help">floating-help</key>
+  <key id="resource-help">select among resources the one to associate with the area: a link leading to the selected resource will be applied on the area</key>
+  <key id="url-help">directly enter the valid Web address to associate with the area: a link leading to the entered address will be applied on the area - WARNING: this address is used only if
+			the ″related resource″ field is empty!</key>
+  <key id="popup-help">popup-help</key>
+  <key id="bordercolor-help">bordercolor-help</key>
+  <key id="borderwidth-help">borderwidth-help</key>
+  <key id="pictogram-help">pictogram-help</key>
+  <key id="areabordercolor">areaBorderColor</key>
+  <key id="areabordercolor-help">ycenter-help</key>
+  <key id="areabgcolor">areaBgColor</key>
+  <key id="areabgcolor-help">areaBgColor</key>
+  <key id="areaopacity">areaBgColor</key>
+  <key id="areaopacity-help">areaOpacity</key>
+</i18n>

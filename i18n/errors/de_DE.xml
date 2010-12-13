@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.errors" lcid="de_DE">
+  <key id="no-picture-for-mapping">kein Bild für das Mapping vorhanden</key>
+  <key id="modules-mapping-getpreferencesdocument">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″Präferenzen öffnen″</key>
+  <key id="modules-mapping-order">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″Elementenreihenfolge ändern″</key>
+  <key id="modules-mapping-editmapping">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″reaktives Bild bearbeiten″</key>
+  <key id="modules-mapping-enabled">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″Zugang zum Modul″</key>
+  <key id="modules-mapping-load-circarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″einen Kreis laden″</key>
+  <key id="modules-mapping-load-polyarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″eine polygonale Zone laden″</key>
+  <key id="modules-mapping-load-rectarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″ein Rechteck laden″</key>
+  <key id="modules-mapping-delete-circarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″einen Kreis löschen″</key>
+  <key id="modules-mapping-delete-polyarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″eine polygonale Zone löschen″</key>
+  <key id="modules-mapping-delete-rectarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″ein Rechteck löschen″</key>
+  <key id="modules-mapping-insert-circarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″einen Kreis einfügen″</key>
+  <key id="modules-mapping-insert-polyarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″eine polygonale Zone einfügen″</key>
+  <key id="modules-mapping-insert-rectarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″ein Rechteck einfügen″</key>
+  <key id="modules-mapping-update-circarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″einen Kreis ändern″</key>
+  <key id="modules-mapping-update-polyarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″ein Polygon ändern″</key>
+  <key id="modules-mapping-update-rectarea">Sie besitzen nicht die Rechte folgende Aktion durchzuführen: ″ein Rechteck ändern″</key>
+</i18n>

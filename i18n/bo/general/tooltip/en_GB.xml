@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.bo.general.tooltip" lcid="en_GB">
+  <key id="circlebegin">lost in translation</key>
+  <key id="circledrawing">lost in translation</key>
+  <key id="rectanglebegin">lost in translation</key>
+  <key id="rectangledrawing">lost in translation</key>
+  <key id="polybegin">lost in translation</key>
+  <key id="polydrawing">lost in translation</key>
+  <key id="blocker">lost in translation</key>
+</i18n>

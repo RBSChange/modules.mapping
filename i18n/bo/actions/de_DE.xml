@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.bo.actions" lcid="de_DE">
+  <key id="createmapping">Ein reaktives Bild erstellen</key>
+  <key id="editmapping">reaktives Bild bearbeiten</key>
+  <key id="createrectanglearea">rechteckige Zone</key>
+  <key id="createcirclearea">kreisförmige Zone</key>
+  <key id="createpolygonarea">polygonale Zone</key>
+  <key id="createrectangleareatooltip">rechteckige Zone erstellen</key>
+  <key id="createcircleareatooltip">kreisförmige Zone erstellen</key>
+  <key id="createpolygonareatooltip">polygonale Zone erstellen</key>
+  <key id="backtolist">zurück zur Liste</key>
+  <key id="cancel">abbrechen</key>
+  <key id="viewarea">anklickbare Zone anzeigen</key>
+  <key id="savingarea">Erstellungsvorgang der laufenden Seite</key>
+  <key id="updatingarea">Aktualisierungsvorgang der laufenden Seite</key>
+</i18n>
