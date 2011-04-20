@@ -1361,12 +1361,7 @@
 					this.cleanList();
 					if (this.mValue != null)
 					{
-						if (this.mSortOnColId)
-						{
-							var col = this.getElementByAnonId(this.mSortOnColId);
-							this.orderRows(col.getAttribute('sortonfield'), col.getAttribute('sortDirection'));
-						}
-					
+						this.mValue.zones.sort(this.compareByLabel);
 						for (var i = 0; i < this.mValue.zones.length; i++)
 						{
 							var item = this.mValue.zones[i];
@@ -1374,31 +1369,15 @@
 						}
 					}
 				]]></body>
-			</method>				
-
-			<method name="orderRows">
-				<parameter name="fieldName" />
-				<parameter name="direction" />
+			</method>
+			
+			<method name="compareByLabel">
+				<parameter name="a" />
+				<parameter name="b" />
 				<body><![CDATA[
-				
-				 var asc = direction === "asc";
-				 var name = fieldName;
-				 this.mValue.versions.sort(function(a, b) {
-				 	if (a[name] == b[name])
-				 	{
-				 		return 0;
-				 	} 
-				 	else if (a[name] < b[name])
-				 	{
-				 		return asc ? -1 : 1;
-				 	}
-				 	else
-				 	{
-				 		return asc ? 1 : -1;
-				 	}
-				 });
+					return (a.label < b.label) ? -1 : 1;
 				]]></body>
-			</method>	
+			</method>
 								
 			<method name="addItem">
 				<parameter name="jsnode" />
@@ -1431,28 +1410,6 @@
 					this.getElementByAnonId('document-rows').appendChild(row);
 				]]></body>
 			</method>
-			
-			<method name="handleSort">
-				<parameter name="node" />
-				<body><![CDATA[
-					if (node.getAttribute('anonid') == this.mSortOnColId)
-					{
-						var dir = (node.getAttribute('sortDirection') == 'asc') ? 'desc' : 'asc';
-						node.setAttribute('sortDirection', dir);
-					}
-					else
-					{
-						if (this.mSortOnColId)
-						{
-							this.getElementByAnonId(this.mSortOnColId).removeAttribute('sortDirection');
-						}
-						this.mSortOnColId = node.getAttribute('anonid');
-						node.setAttribute('sortDirection', 'asc');
-					}
-					this.onLoad();
-				]]></body>
-			</method>
-			
 
 			<method name="edit">
 				<parameter name="id" />
@@ -1484,15 +1441,6 @@
 					return;
 				}
 			]]></handler>
-			
-			<handler event="click" button="0" clickcount="1"><![CDATA[
-				var target = event.originalTarget;
-				if (target.localName == 'label' && target.hasAttribute('sortonfield'))
-				{
-					this.handleSort(target);
-					return;
-				}
-			]]></handler>
 		</handlers>	
 		<resources>
 			<stylesheet src="modules.uixul.cEditorGrid" />
@@ -1509,10 +1457,10 @@
 						</xul:columns>
 						<xul:rows anonid="document-rows">
 							<xul:row class="head">
-								<xul:label sortonfield="label" anonid="label" value="Libellé" />
-								<xul:label sortonfield="form" anonid="formColumn" value="Forme" />
-								<xul:label sortonfield="href" anonid="hrefColumn" value="Lien" />
-								<xul:label sortonfield="status" anonid="statusColumn" value="Etat" />
+								<xul:label anonid="label" value="Libellé" />
+								<xul:label anonid="formColumn" value="Forme" />
+								<xul:label anonid="hrefColumn" value="Lien" />
+								<xul:label anonid="statusColumn" value="Etat" />
 								<xul:label anonid="actionsColumn" value="Actions" />
 							</xul:row>
 						</xul:rows>
