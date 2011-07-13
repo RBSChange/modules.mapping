@@ -3,7 +3,7 @@
   <name>mapping</name>
   <type>change-module</type>
   <version>3.5.0</version>
-  <license>com</license>
+  <license>os</license>
   <repository>public</repository>
   <description>Images réactives</description>
   <dependencies>
