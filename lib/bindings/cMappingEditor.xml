@@ -11,15 +11,15 @@
 	   	   <xul:vbox flex="1">
 				<xul:toolbox orient="vertical" class="change-toolbox">
 					<xul:toolbar flex="1" class="change-toolbar" style="font-size: 9pt;" height="25">
-						<xul:toolbarbutton anonid="selectionmode" change:icon="edit/small" label="Selection"
+						<xul:toolbarbutton anonid="selectionmode" change:img="icon/small/edit.png" label="Selection"
 							oncommand="selectionMode();" class="selected" autoCheck="false" type="checkbox" checked="true" />	
-						<xul:toolbarbutton anonid="mappingboxbutton" change:icon="shape-rectangle/small" label="Create rectangle area" 
+						<xul:toolbarbutton anonid="mappingboxbutton" change:img="icon/small/shape-rectangle.png" label="Create rectangle area" 
 							i18n:attributes="label &amp;modules.mapping.bo.actions.Createrectanglearea; tooltiptext &amp;modules.mapping.bo.actions.Createrectangleareatooltip;" 
 							oncommand="createArea('rectarea');" class="unselected" autoCheck="false" type="checkbox"/>
-						<xul:toolbarbutton anonid="mappingcirclebutton" change:icon="shape-circle/small" label="Create circle area" 
+						<xul:toolbarbutton anonid="mappingcirclebutton" change:img="icon/small/shape-circle.png" label="Create circle area" 
 							i18n:attributes="label &amp;modules.mapping.bo.actions.Createcirclearea; tooltiptext &amp;modules.mapping.bo.actions.Createcircleareatooltip;" 
 							oncommand="createArea('circlearea');" class="unselected" autoCheck="false" type="checkbox"/>
-						<xul:toolbarbutton anonid="mappingpolygonbutton" change:icon="shape-polygon/small" label="Create polygon area" 
+						<xul:toolbarbutton anonid="mappingpolygonbutton" change:img="icon/small/shape-polygon.png" label="Create polygon area" 
 							i18n:attributes="label &amp;modules.mapping.bo.actions.Createpolygonarea; tooltiptext &amp;modules.mapping.bo.actions.Createpolygonareatooltip;" 
 							oncommand="createArea('polygonarea');" class="unselected" autoCheck="false" type="checkbox"/>
 							
