@@ -44,11 +44,12 @@ class mapping_persistentdocument_mapping extends mapping_persistentdocument_mapp
 	 */
 	private function getAreaInfo($area)
 	{
-		return array('id' => $area->getId(), 
-					'label' => $area->getLabel(),
-					'form' => $area->getShape(),
-					'href' => $area->getHref(),
-					'status' => f_Locale::translateUI(DocumentHelper::getPublicationstatusLocaleKey($this)),
+		return array(
+			'id' => $area->getId(), 
+			'label' => $area->getLabel(),
+			'form' => $area->getShape(),
+			'href' => $area->getHref(),
+			'status' => LocaleService::getInstance()->transBO(DocumentHelper::getStatusLocaleKey($this))
 		);
 	}
 	
