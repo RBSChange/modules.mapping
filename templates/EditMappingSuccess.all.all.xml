@@ -368,7 +368,7 @@
   <div id="tooltip" class="tooltip"> </div>
 
   <div id="blocker" class="blocker">
-         <div class="blocker-content" i18n:translate="&modules.mapping.bo.general.tooltip.BlockerEllipsis;"/>
+         <div class="blocker-content" tal:content="trans:m.mapping.bo.general.tooltip.blocker,ucf,etc"/>
   </div>
 
 </body>
