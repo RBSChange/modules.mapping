@@ -28,7 +28,7 @@ class mapping_BlockMappingAction extends website_BlockAction
 	 */
 	public function execute($request, $response)
 	{
-		$this->getPage()->addScript('modules.mapping.lib.js.mapper');
+		$this->getContext()->addScript('modules.mapping.lib.js.mapper');
 		$areas = array();
 		$mapping = $this->getRequiredDocumentParameter();
 		foreach ($mapping->getAreaArray() as $area)

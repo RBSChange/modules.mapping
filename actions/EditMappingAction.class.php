@@ -21,7 +21,7 @@ class mapping_EditMappingAction extends mapping_Action
 			$request->setAttribute('picturewidth', $mediaInfo['width']);
 			$request->setAttribute('pictureheight', $mediaInfo['height']);
 			$request->setAttribute('pictureSize', array('width' => $mediaInfo['width'], 'height' => $mediaInfo['height']));
-			$request->setAttribute('pictureURL', MediaHelper::getPublicUrl($picture));
+			$request->setAttribute('pictureURL', LinkHelper::getDocumentUrl($picture));
 			$request->setAttribute('picture', MediaHelper::getContent($picture, K::HTML));
 
 			$request->setAttribute('documentLabel', $document->getLabel());
