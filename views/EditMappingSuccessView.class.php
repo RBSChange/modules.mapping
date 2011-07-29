@@ -1,7 +1,6 @@
 <?php
 class mapping_EditMappingSuccessView extends f_view_BaseView
 {
-
 	/**
 	 * @param Context $context
 	 * @param Request $request
@@ -47,7 +46,7 @@ class mapping_EditMappingSuccessView extends f_view_BaseView
 		$this->setAttribute('docType', '<!DOCTYPE html [<!ATTLIST mozdraw:canvas id ID #IMPLIED>]>');
 
 		// include styles
-		$styleService = StyleService::getInstance();
+		$styleService = website_StyleService::getInstance();
 		$styleService->registerStyle('modules.mapping.bindings');
 		$styleService->registerStyle('modules.generic.backoffice');
 		$styleService->registerStyle('modules.mapping.mapping');
