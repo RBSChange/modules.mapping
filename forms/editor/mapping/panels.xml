@@ -9,7 +9,7 @@
 	<xul>
 		<javascript>
 			<constructor><![CDATA[
-				this.addTab('areaeditor', '&modules.mapping.bo.doceditor.tab.AreaEditor;', 'document');
+				this.addTab('areaeditor', "${transui:m.mapping.bo.doceditor.tab.areaeditor,js,ucf}", 'document');
 			]]></constructor>
 		</javascript>
 	</xul>	  
