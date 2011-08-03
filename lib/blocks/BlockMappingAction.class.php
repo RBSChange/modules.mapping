@@ -58,6 +58,6 @@ class mapping_BlockMappingAction extends website_BlockAction
 		}
 		$request->setAttribute("mapping", $this->getRequiredDocumentParameter());
 		$request->setAttribute("areas", $areas);
-		return block_BlockView::SUCCESS;
+		return website_BlockView::SUCCESS;
 	}
 }
