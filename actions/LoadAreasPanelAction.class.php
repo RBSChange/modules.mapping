@@ -1,12 +1,12 @@
 <?php
-class mapping_LoadAreasPanelAction extends f_action_BaseJSONAction
+class mapping_LoadAreasPanelAction extends change_JSONAction
 {
 	
 	/**
 	 * @see f_action_BaseAction::_execute()
 	 *
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	protected function _execute($context, $request)
 	{
@@ -15,7 +15,7 @@ class mapping_LoadAreasPanelAction extends f_action_BaseJSONAction
 	}
 	
 	/**
-	 * @param Request $request
+	 * @param change_Request $request
 	 * @return mapping_persistentdocument_mapping
 	 */
 	private function getMapping($request)

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<help defaultContent="help0">
-	<content name="help0" fileName="help0" title-fr="Cr&#xE9;ation d&#x2019;une image r&#xE9;active" />
-	<content name="help1" fileName="help1" title-fr="Edition d&#x2019;une image r&#xE9;active" />
-	<content name="help2" fileName="help2" title-fr="Cr&#xE9;ation des zones r&#xE9;actives sur l&#x2019;image" />
-	<content name="help3" fileName="help3" title-fr="D&#xE9;finition des zones r&#xE9;actives" />
-</help>
