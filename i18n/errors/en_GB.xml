@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.mapping.errors" lcid="en_GB">
   <key id="no-picture-for-mapping">no picture for mapping</key>
-  <key id="modules-mapping-getpreferencesdocument">you don't have the appropriate permission to perform this operation : ″Open preferences window″</key>
-  <key id="modules-mapping-order">you don't have the appropriate permission to perform this operation : ″Sort out the elements″</key>
-  <key id="modules-mapping-editmapping">you don't have the appropriate permission to perform this operation : ″Edit an image map″</key>
-  <key id="modules-mapping-enabled">you don't have the appropriate permission to perform this operation : ″Access to the module″</key>
-  <key id="modules-mapping-load-circarea">you don't have the appropriate permission to perform this operation : ″Load a circle″</key>
-  <key id="modules-mapping-load-polyarea">you don't have the appropriate permission to perform this operation : ″Load a polygonal area″</key>
-  <key id="modules-mapping-load-rectarea">you don't have the appropriate permission to perform this operation : ″Load a rectangular area″</key>
-  <key id="modules-mapping-delete-circarea">you don't have the appropriate permission to perform this operation : ″Delete a circle area″</key>
-  <key id="modules-mapping-delete-polyarea">you don't have the appropriate permission to perform this operation : ″Delete a polygonal area″</key>
-  <key id="modules-mapping-delete-rectarea">you don't have the appropriate permission to perform this operation : ″Delete a rectangular area″</key>
-  <key id="modules-mapping-insert-circarea">you don't have the appropriate permission to perform this operation : ″Insert a circle area″</key>
-  <key id="modules-mapping-insert-polyarea">you don't have the appropriate permission to perform this operation : ″Insert a polygonal area″</key>
-  <key id="modules-mapping-insert-rectarea">you don't have the appropriate permission to perform this operation : ″Insert a rectangular area″</key>
-  <key id="modules-mapping-update-circarea">you don't have the appropriate permission to perform this operation : ″Update a circle area″</key>
-  <key id="modules-mapping-update-polyarea">you don't have the appropriate permission to perform this operation : ″Update a polygonal area″</key>
-  <key id="modules-mapping-update-rectarea">you don't have the appropriate permission to perform this operation : ″Update a rectangular area″</key>
+  <key id="modules-mapping-getpreferencesdocument">you do not have the appropriate permissions to perform the following operation: "Open preferences"</key>
+  <key id="modules-mapping-order">you do not have the appropriate permissions to perform the following operation: "Reorder the elements"</key>
+  <key id="modules-mapping-editmapping">you do not have the appropriate permissions to perform the following operation : "Edit an image map"</key>
+  <key id="modules-mapping-enabled">you do not have the appropriate permissions to perform the following operation: "Access the module"</key>
+  <key id="modules-mapping-load-circarea">you do not have the appropriate permissions to perform the following operation : "Load a circular area"</key>
+  <key id="modules-mapping-load-polyarea">you do not have the appropriate permissions to perform the following operation : "Load a polygonal area"</key>
+  <key id="modules-mapping-load-rectarea">you do not have the appropriate permissions to perform the following operation : "Load a rectangular area"</key>
+  <key id="modules-mapping-delete-circarea">you do not have the appropriate permissions to perform the following operation : "Delete a circular area"</key>
+  <key id="modules-mapping-delete-polyarea">you do not have the appropriate permissions to perform the following operation : "Delete a polygonal area"</key>
+  <key id="modules-mapping-delete-rectarea">you do not have the appropriate permissions to perform the following operation : "Delete a rectangular area"</key>
+  <key id="modules-mapping-insert-circarea">you do not have the appropriate permissions to perform the following operation : "Insert a circular area"</key>
+  <key id="modules-mapping-insert-polyarea">you do not have the appropriate permissions to perform the following operation : "Insert a polygonal area"</key>
+  <key id="modules-mapping-insert-rectarea">you do not have the appropriate permissions to perform the following operation : "Insert a rectangular area"</key>
+  <key id="modules-mapping-update-circarea">you do not have the appropriate permissions to perform the following operation : "Edit a circular area"</key>
+  <key id="modules-mapping-update-polyarea">you do not have the appropriate permissions to perform the following operation : "Edit a polygonal area"</key>
+  <key id="modules-mapping-update-rectarea">you do not have the appropriate permissions to perform the following operation : "Edit a rectangular area"</key>
 </i18n>

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.mapping.bo.actions" lcid="en_GB">
-  <key id="createmapping">create image map</key>
-  <key id="editmapping">edit image map</key>
+  <key id="createmapping">create an image map</key>
+  <key id="editmapping">edit the image map</key>
   <key id="createrectanglearea">rectangular area</key>
   <key id="createcirclearea">circular area</key>
   <key id="createpolygonarea">polygonal area</key>
-  <key id="createrectangleareatooltip">create rectangular area</key>
-  <key id="createcircleareatooltip">create circular area</key>
-  <key id="createpolygonareatooltip">create polygonal area</key>
+  <key id="createrectangleareatooltip">create a rectangular area</key>
+  <key id="createcircleareatooltip">create a circular area</key>
+  <key id="createpolygonareatooltip">create a polygonal area</key>
   <key id="backtolist">back to list</key>
   <key id="cancel">cancel</key>
-  <key id="viewarea">display clickable area</key>
-  <key id="savingarea">lost in translation</key>
-  <key id="updatingarea">lost in translation</key>
+  <key id="viewarea">view the clickable area</key>
+  <key id="savingarea">creation of the area in progress…</key>
+  <key id="updatingarea">update of the area in progress…</key>
+  <key id="selectarea">select</key>
 </i18n>

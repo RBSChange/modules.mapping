@@ -12,5 +12,6 @@
   <key id="cancel">annuler</key>
   <key id="viewarea">voir la zone cliquable</key>
   <key id="savingarea">création de la zone en cours</key>
-  <key id="updatingarea">mise à jour de la zone en cours</key>
+  <key id="updatingarea">mise à jour de la zone en cours</key>  
+  <key id="selectarea">sélectionner</key>
 </i18n>

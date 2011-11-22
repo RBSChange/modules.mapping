@@ -11,16 +11,16 @@
 	   	   <xul:vbox flex="1">
 				<xul:toolbox orient="vertical" class="change-toolbox">
 					<xul:toolbar flex="1" class="change-toolbar" style="font-size: 9pt;" height="25">
-						<xul:toolbarbutton anonid="selectionmode" change:icon="edit/small" label="Selection"
+						<xul:toolbarbutton anonid="selectionmode" change:icon="edit/small" label="${transui:m.mapping.bo.actions.selectarea,ucf,attr}"
 							oncommand="selectionMode();" class="selected" autoCheck="false" type="checkbox" checked="true" />	
-						<xul:toolbarbutton anonid="mappingboxbutton" change:icon="shape-rectangle/small" label="Create rectangle area" 
-							i18n:attributes="label &amp;modules.mapping.bo.actions.Createrectanglearea; tooltiptext &amp;modules.mapping.bo.actions.Createrectangleareatooltip;" 
+						<xul:toolbarbutton anonid="mappingboxbutton" change:icon="shape-rectangle/small"
+							label="${transui:m.mapping.bo.actions.Createrectanglearea,ucf,attr}" tooltiptext="${transui:m.mapping.bo.actions.Createrectangleareatooltip,ucf,attr}" 
 							oncommand="createArea('rectarea');" class="unselected" autoCheck="false" type="checkbox"/>
-						<xul:toolbarbutton anonid="mappingcirclebutton" change:icon="shape-circle/small" label="Create circle area" 
-							i18n:attributes="label &amp;modules.mapping.bo.actions.Createcirclearea; tooltiptext &amp;modules.mapping.bo.actions.Createcircleareatooltip;" 
+						<xul:toolbarbutton anonid="mappingcirclebutton" change:icon="shape-circle/small"
+							label="${transui:m.mapping.bo.actions.Createcirclearea,ucf,attr}" tooltiptext="${transui:m.mapping.bo.actions.Createcircleareatooltip,ucf,attr}" 
 							oncommand="createArea('circlearea');" class="unselected" autoCheck="false" type="checkbox"/>
-						<xul:toolbarbutton anonid="mappingpolygonbutton" change:icon="shape-polygon/small" label="Create polygon area" 
-							i18n:attributes="label &amp;modules.mapping.bo.actions.Createpolygonarea; tooltiptext &amp;modules.mapping.bo.actions.Createpolygonareatooltip;" 
+						<xul:toolbarbutton anonid="mappingpolygonbutton" change:icon="shape-polygon/small"
+							label="${transui:m.mapping.bo.actions.Createpolygonarea,ucf,attr}" tooltiptext="${transui:m.mapping.bo.actions.Createpolygonareatooltip,ucf,attr}" 
 							oncommand="createArea('polygonarea');" class="unselected" autoCheck="false" type="checkbox"/>
 							
 						<xul:hbox align="center" flex="1">
@@ -1180,8 +1180,8 @@
 			<xul:vbox flex="1">
 				<xul:cmessageinfo anonid="message" />
 				<xul:hbox anonid="action-bar">
-					<xul:button anonid="save_properties" oncommand="saveProperties()" label="&amp;modules.uixul.bo.doceditor.button.Save;" image="{IconsBase}/small/save.png"/>
-					<xul:button anonid="reset_properties" oncommand="resetProperties()" label="&amp;modules.uixul.bo.doceditor.button.Canceledit;" image="{IconsBase}/small/undo.png"/>
+					<xul:button anonid="save_properties" oncommand="saveProperties()" label="${transui:m.uixul.bo.doceditor.button.Save,ucf,attr}" image="{IconsBase}/small/save.png"/>
+					<xul:button anonid="reset_properties" oncommand="resetProperties()" label="${transui:m.uixul.bo.doceditor.button.Canceledit,ucf,attr}" image="{IconsBase}/small/undo.png"/>
 				</xul:hbox>
 				<xul:spacer height="5" />
 				<xul:mappingeditor anonid="mappingeditor" editheight="600" editwidth="800" flex="1"/>

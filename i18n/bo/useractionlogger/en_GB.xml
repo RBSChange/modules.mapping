@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.mapping.bo.useractionlogger" lcid="en_GB">
+  <key id="activate-circarea">activate.circarea {documentlabel}</key>
+  <key id="activate-mapping">activate.mapping {documentlabel}</key>
+  <key id="deactivated-mapping">deactivated.mapping {documentlabel}</key>
+  <key id="delete-circarea">delete.circarea {documentlabel}</key>
+  <key id="delete-folder">delete.folder {documentlabel}</key>
+  <key id="delete-mapping">delete.mapping {documentlabel}</key>
+  <key id="insert-folder">insert.folder {documentlabel}</key>
+  <key id="insert-mapping">insert.mapping {documentlabel}</key>
+  <key id="log-activate-circarea">log-activate-circarea</key>
+  <key id="log-activate-mapping">log-activate-mapping</key>
+  <key id="log-deactivated-mapping">log-deactivated-mapping</key>
+  <key id="log-delete-circarea">log-delete-circarea</key>
+  <key id="log-delete-folder">log-delete-folder</key>
+  <key id="log-delete-mapping">log-delete-mapping</key>
+  <key id="log-insert-folder">log-insert-folder</key>
+  <key id="log-insert-mapping">log-insert-mapping</key>
+  <key id="log-reactivate-mapping">log-reactivate-mapping</key>
+  <key id="log-update-circarea">log-update-circarea</key>
+  <key id="log-update-folder">log-update-folder</key>
+  <key id="log-update-mapping">log-update-mapping</key>
+  <key id="log-update-polyarea">log-update-polyarea</key>
+  <key id="log-update-rectarea">log-update-rectarea</key>
+  <key id="reactivate-mapping">reactivate.mapping {documentlabel}</key>
+  <key id="update-circarea">update.circarea {documentlabel}</key>
+  <key id="update-folder">update.folder {documentlabel}</key>
+  <key id="update-mapping">update.mapping {documentlabel}</key>
+  <key id="update-polyarea">update.polyarea {documentlabel}</key>
+  <key id="update-rectarea">update.rectarea {documentlabel}</key>
+</i18n>
