@@ -1180,8 +1180,8 @@
 			<xul:vbox flex="1">
 				<xul:cmessageinfo anonid="message" />
 				<xul:hbox anonid="action-bar">
-					<xul:button anonid="save_properties" oncommand="saveProperties()" label="&amp;modules.uixul.bo.doceditor.button.Save;" image="{IconsBase}/small/save.png"/>
-					<xul:button anonid="reset_properties" oncommand="resetProperties()" label="&amp;modules.uixul.bo.doceditor.button.Canceledit;" image="{IconsBase}/small/undo.png"/>
+					<xul:button anonid="save_properties" oncommand="saveProperties()" label="${trans:m.uixul.bo.doceditor.button.Save,ucf,attr}" image="{IconsBase}/small/save.png"/>
+					<xul:button anonid="reset_properties" oncommand="resetProperties()" label="${trans:m.uixul.bo.doceditor.button.Canceledit,ucf,attr}" image="{IconsBase}/small/undo.png"/>
 				</xul:hbox>
 				<xul:spacer height="5" />
 				<xul:mappingeditor anonid="mappingeditor" editheight="600" editwidth="800" flex="1"/>

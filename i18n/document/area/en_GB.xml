@@ -3,26 +3,27 @@
   <key id="label">area name</key>
   <key id="description">description</key>
   <key id="floating">floating box</key>
-  <key id="resource">related resource</key>
-  <key id="url">related address</key>
+  <key id="resource">associated resource</key>
+  <key id="url">associated address</key>
   <key id="popup">popup</key>
-  <key id="bordercolor">border color</key>
-  <key id="borderwidth">bordeur width</key>
+  <key id="bordercolor">border colour</key>
+  <key id="borderwidth">border width</key>
   <key id="pictogram">pictogram</key>
-  <key id="label-help">name used in Change. This name will be used for default textual alternative</key>
-  <key id="description-help">textual alternative and tooltip</key>
+  <key id="label-help">name identifying the area in Change. This name will be used as default alternative text.</key>
+  <key id="description-help">Area description. Used as alternative text and tooltip</key>
   <key id="floating-help">floating-help</key>
-  <key id="resource-help">select among resources the one to associate with the area: a link leading to the selected resource will be applied on the area</key>
-  <key id="url-help">directly enter the valid Web address to associate with the area: a link leading to the entered address will be applied on the area - WARNING: this address is used only if
-			the ″related resource″ field is empty!</key>
+  <key id="resource-help">Select the one to be associated with the area among the resources : a link leading to the selected resource will be applied on the area.</key>
+  <key id="url-help">Directly enter the valid Web address which must be associated with the area: a link leading to the entered address will be applied on the area - WARNING: this address is
+			taken into account only if the "associated resource" field is empty!</key>
   <key id="popup-help">popup-help</key>
   <key id="bordercolor-help">bordercolor-help</key>
   <key id="borderwidth-help">borderwidth-help</key>
   <key id="pictogram-help">pictogram-help</key>
-  <key id="areabordercolor">areaBorderColor</key>
-  <key id="areabordercolor-help">ycenter-help</key>
-  <key id="areabgcolor">areaBgColor</key>
-  <key id="areabgcolor-help">areaBgColor</key>
-  <key id="areaopacity">areaBgColor</key>
-  <key id="areaopacity-help">areaOpacity</key>
+  <key id="areabordercolor">area border colour</key>
+  <key id="areabordercolor-help">area border colour</key>
+  <key id="areabgcolor">area background colour</key>
+  <key id="areabgcolor-help">area background colour</key>
+  <key id="areaopacity">background colour opacity</key>
+  <key id="areaopacity-help">A value, from 0 to 100.</key>
+  <key id="document-name">area</key>
 </i18n>

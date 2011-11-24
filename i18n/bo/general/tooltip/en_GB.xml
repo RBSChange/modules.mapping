@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.mapping.bo.general.tooltip" lcid="en_GB">
-  <key id="circlebegin">lost in translation</key>
-  <key id="circledrawing">lost in translation</key>
-  <key id="rectanglebegin">lost in translation</key>
-  <key id="rectangledrawing">lost in translation</key>
-  <key id="polybegin">lost in translation</key>
-  <key id="polydrawing">lost in translation</key>
-  <key id="blocker">lost in translation</key>
+  <key id="circlebegin">click on the image to define the center of the circle</key>
+  <key id="circledrawing">keep the button pressed and move the mouse to define the radius</key>
+  <key id="rectanglebegin">click on the image to define the starting point of the rectangle</key>
+  <key id="rectangledrawing">keep the button pressed and move the mouse to define the rectangle</key>
+  <key id="polybegin">click on the image to define the starting point of the polygon, then release the button</key>
+  <key id="polydrawing">click elsewhere to define the next point (click on the point of origin in order to close the polygon)</key>
+  <key id="blocker">updating document, please wait</key>
 </i18n>
