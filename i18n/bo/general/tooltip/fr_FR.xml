@@ -6,5 +6,4 @@
   <key id="rectangledrawing">maintenez le bouton appuyé et déplacez la souris pour définir le rectangle</key>
   <key id="polybegin">cliquez sur l'image pour définir le point de départ du polygone, puis relâchez le bouton</key>
   <key id="polydrawing">cliquez ailleurs pour définir le point suivant (cliquez sur le point d'origine pour fermer le polygone)</key>
-  <key id="blocker">mise à jour du document en cours,veuillez patienter</key>
 </i18n>
