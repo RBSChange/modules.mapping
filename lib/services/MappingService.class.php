@@ -38,57 +38,57 @@ class mapping_MappingService extends f_persistentdocument_DocumentService
 	{
 		return $this->pp->createQuery('modules_mapping/mapping');
 	}
-	
+
 	/**
 	 * @param mapping_persistentdocument_mapping $mapping
 	 * @return array
 	 */
 	public function getAreasPanelInfo($mapping)
 	{
-		$media = $mapping->getPicture();		
-		$imageInfo = $media->getInfo();		
+		$media = $mapping->getPicture();
+		$imageInfo = $media->getInfo();
 		$url = LinkHelper::getUIActionLink('media', 'BoDisplay')
-		->setQueryParameter('cmpref', $media->getId())
-		->setQueryParameter('lang', RequestContext::getInstance()->getLang())
-		->setQueryParameter('time', date_Calendar::now()->getTimestamp())->getUrl();
+			->setQueryParameter('cmpref', $media->getId())
+			->setQueryParameter('lang', RequestContext::getInstance()->getLang())
+			->setQueryParameter('time', date_Calendar::now()->getTimestamp())->getUrl();
 		$imageInfo['src'] = $url;
-		
+
 		$zonesInfo = array();
-		foreach ($mapping->getAreaArray() as $area) 
+		foreach ($mapping->getAreaArray() as $area)
 		{
 			$zonesInfo[] = $area->getPanelInfo();
 		}
 		return array('imageInfo' => $imageInfo, 'zonesInfo' => $zonesInfo);
 	}
-	
+
 	/**
 	 * @param mapping_persistentdocument_mapping $mapping
 	 * @param array $zonesInfo
 	 */
 	public function setZonesInfo($mapping, $zonesInfo)
 	{
-		try 
+		try
 		{
 			$this->tm->beginTransaction();
 			$areaIds = array();
-			foreach ($zonesInfo as $zoneInfo) 
+			foreach ($zonesInfo as $zoneInfo)
 			{
 				if (f_util_StringUtils::beginsWith($zoneInfo['id'], 't'))
 				{
-					switch ($zoneInfo['type']) 
+					switch ($zoneInfo['type'])
 					{
 						case 'rectarea':
 							$area = mapping_RectareaService::getInstance()->getNewDocumentInstance();
-						break;
+							break;
 						case 'circlearea':
 							$area = mapping_CircareaService::getInstance()->getNewDocumentInstance();
-						break;
+							break;
 						case 'polygonarea':
 							$area = mapping_PolyareaService::getInstance()->getNewDocumentInstance();
-						break;							
+							break;
 						default:
 							throw new Exception('Invalid-area-type: ' . $zoneInfo['type']);
-						break;
+							break;
 					}
 					$area->setLabel(f_Locale::translateUI('&modules.mapping.bo.general.newzone;', array('count' => count($areaIds) + 1)));
 				}
@@ -107,17 +107,17 @@ class mapping_MappingService extends f_persistentdocument_DocumentService
 					$mapping->addArea($area);
 				}
 				$area->save();
-				$areaIds[] = $area->getId();			
+				$areaIds[] = $area->getId();
 			}
-			
-			foreach ($mapping->getAreaArray() as $area) 
+				
+			foreach ($mapping->getAreaArray() as $area)
 			{
 				if (!in_array($area->getId(), $areaIds))
 				{
 					$area->delete();
 				}
 			}
-			
+				
 			$mapping->save();
 			$this->tm->commit();
 		}
@@ -126,5 +126,61 @@ class mapping_MappingService extends f_persistentdocument_DocumentService
 			$this->tm->rollBack($e);
 			throw $e;
 		}
+	}
+
+	/**
+	 * @param mapping_persistentdocument_mapping $document
+	 * @param string $forModuleName
+	 * @param array $allowedSections
+	 * @return array
+	 */
+	public function getResume($document, $forModuleName, $allowedSections = null)
+	{
+		$data = parent::getResume($document, $forModuleName, $allowedSections);
+
+		$media = $document->getPicture();
+
+		$rc = RequestContext::getInstance();
+		$lang = ($media->isContextLangAvailable()) ? $rc->getLang() : $media->getLang();
+		try
+		{
+			$rc->beginI18nWork($lang);
+
+			$info = $media->getCommonInfo();
+			$data['content'] = array(
+				'mimetype' => $media->getMimetype(),
+				'size' => $info['size'],
+				'previewimgurl' => array('id' => $media->getId(), 'lang' => $lang)
+			);
+
+			if ($media->getMediatype() == MediaHelper::TYPE_IMAGE)
+			{
+				$pixelsLabel = LocaleService::getInstance()->trans('m.media.bo.doceditor.pixels');
+				$data['content']['width'] = $info['width'].' '.$pixelsLabel;
+				$data['content']['height'] = $info['height'].' '.$pixelsLabel;
+				$data['content']['previewimgurl']['image'] = LinkHelper::getUIActionLink('media', 'BoDisplay')
+					->setQueryParameter('cmpref', $media->getId())
+					->setQueryParameter('max-height', 128)
+					->setQueryParameter('max-width', 128)
+					->setQueryParameter('lang', $lang)
+					->setQueryParameter('time', date_Calendar::now()->getTimestamp())->getUrl();
+			}
+			else
+			{
+				$data['content']['previewimgurl']['image'] = '';
+			}
+				
+			$openNotificationUri = join(',' , array('media', 'openDocument', $media->getPersistentModel()->getBackofficeName(), $media->getId(), 'resume'));
+			$backUri = join(',', array('mapping', 'openDocument', $document->getPersistentModel()->getBackofficeName(), $document->getId(), 'resume'));
+			$data['content']['picture'] = array('uri' => $openNotificationUri, 'label' => f_Locale::translateUI('&modules.uixul.bo.doceditor.open;'), 'backuri' => $backUri);
+
+			$rc->endI18nWork();
+		}
+		catch (Exception $e)
+		{
+			$rc->endI18nWork($e);
+		}
+
+		return $data;
 	}
 }
