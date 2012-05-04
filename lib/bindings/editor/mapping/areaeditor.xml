@@ -539,7 +539,7 @@
 	    </handlers>  
     </binding>
     
-    <binding id="rectarea" extends="modules.mapping.cMappingEditor#genericarea">
+    <binding id="rectarea" extends="modules.mapping.editor.mapping.areaeditor#genericarea">
     	<content>
     		<svg:rect stroke="black" stroke-width="1px" fill="blue" opacity="0.5" xbl:inherits="style, x, y, width, height, stroke, stroke-width, fill" />
     	</content>
@@ -731,7 +731,7 @@
     	</implementation>
     </binding>  
     
-    <binding id="circlearea" extends="modules.mapping.cMappingEditor#genericarea">
+    <binding id="circlearea" extends="modules.mapping.editor.mapping.areaeditor#genericarea">
     	<content>
     		<svg:circle stroke="black" stroke-width="1px" fill="blue" opacity="0.5" xbl:inherits="style, cx, cy, r, stroke, stroke-width, fill" />
     	</content>
@@ -895,7 +895,7 @@
     	</implementation>
     </binding> 
     
-    <binding id="polygonarea" extends="modules.mapping.cMappingEditor#genericarea">
+    <binding id="polygonarea" extends="modules.mapping.editor.mapping.areaeditor#genericarea">
     	<content>
     		<svg:polygon anonid="svg-polygone" stroke="black" stroke-width="1px" fill="blue" opacity="0.5" xbl:inherits="style, points, stroke, stroke-width, fill" />
     	</content>    	
@@ -1141,7 +1141,7 @@
 		</implementation>    	
     </binding>    
     
-    <binding id="careaeditorpanel" extends="layout.cDocumentEditor#cDocumentEditorPanel">
+    <binding id="mapping_areaeditor" extends="layout.cDocumentEditor#cDocumentEditorPanel">
 		<content>
 			<xul:vbox flex="1">
 				<xul:cmessageinfo anonid="message" />

@@ -2,15 +2,8 @@
 <panels>
 	<panel name="resume" />
 	<panel name="properties" />
+	<panel name="areaeditor" icon="document" labeli18n="m.mapping.bo.doceditor.tab.areaEditor"/>
 	<panel name="publication" />
 	<panel name="history" />
 	<panel name="create" />
-
-	<xul>
-		<javascript>
-			<constructor><![CDATA[
-				this.addTab('areaeditor', '&modules.mapping.bo.doceditor.tab.AreaEditor;', 'document');
-			]]></constructor>
-		</javascript>
-	</xul>	  
 </panels>

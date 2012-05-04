@@ -1,24 +1,20 @@
 
 mappingeditor {
-	-moz-binding: url(binding:modules.mapping.cMappingEditor#mappingeditor);
+	-moz-binding: url(binding:modules.mapping.editor.mapping.areaeditor#mappingeditor);
 }
 
 mappingarea.rectarea {
-	-moz-binding: url(binding:modules.mapping.cMappingEditor#rectarea);
+	-moz-binding: url(binding:modules.mapping.editor.mapping.areaeditor#rectarea);
 }
 
 mappingarea.circlearea {
-	-moz-binding: url(binding:modules.mapping.cMappingEditor#circlearea);
+	-moz-binding: url(binding:modules.mapping.editor.mapping.areaeditor#circlearea);
 }
 
 mappingarea.polygonarea {
-	-moz-binding: url(binding:modules.mapping.cMappingEditor#polygonarea);
-}
-
-cdocumenteditor careaeditorpanel{
-	-moz-binding: url(binding:modules.mapping.cMappingEditor#careaeditorpanel);
+	-moz-binding: url(binding:modules.mapping.editor.mapping.areaeditor#polygonarea);
 }
 
 cfield[fieldtype="zonesinfolist"]{
-	-moz-binding: url(binding:modules.mapping.cMappingEditor#czonesinfolist);
+	-moz-binding: url(binding:modules.mapping.editor.mapping.areaeditor#czonesinfolist);
 }
