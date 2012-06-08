@@ -31,8 +31,11 @@ body{
 	font-family: arial, helvetica, sans-serif;
 	border: 1px solid goldenrod;
 	-moz-border-radius-topleft: 6px;
+	border-top-left-radius: 6px;
 	-moz-border-radius-topright: 6px;
+	border-top-right-radius: 6px;
 	-moz-border-radius-bottomright: 6px;
+	border-bottom-right-radius: 6px;
 	visibility: hidden;
 	-moz-opacity: 0.8;
 }
@@ -60,6 +63,7 @@ body{
 	margin-top: 25%;
 	width: 50%;
 	-moz-border-radius: 6px;
+	border-radius: 6px;
 }
 controlpoint[type="resize-up"]{
 	cursor: n-resize;
