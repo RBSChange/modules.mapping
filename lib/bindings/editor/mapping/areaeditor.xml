@@ -292,7 +292,9 @@
 						scale: 1
 					}
 					
-					this.setAttribute('editstyle', 'min-width: '+Math.round(this.coordInfo.editWidth)+'px; min-height: '+Math.round(this.coordInfo.editHeight)+'px');
+					var width = Math.round(this.coordInfo.editWidth);
+					var height = Math.round(this.coordInfo.editHeight); 
+					this.setAttribute('editstyle', 'min-width: '+width+'px; max-width: '+width+'px; min-height: '+height+'px; max-height: '+height+'px');
 				]]></body>
 			</method>	
 			
@@ -337,8 +339,9 @@
 			<method name="setCursorCoord">
 				<parameter name="event"/>
 				<body><![CDATA[
-					this.coordInfo.cursorX = event.clientX - this.coordInfo.clientX;
-					this.coordInfo.cursorY = event.clientY - this.coordInfo.clientY;				
+					var maxSize = this.getElementByAnonId('max-size');
+					this.coordInfo.cursorX = event.clientX + maxSize.scrollLeft - this.coordInfo.clientX;
+					this.coordInfo.cursorY = event.clientY + maxSize.scrollTop - this.coordInfo.clientY;				
 					this.setAttribute('cursor-coord', 'X:' + Math.round(this.coordInfo.cursorX / this.coordInfo.scale) 
 							+ ', Y:' +Math.round(this.coordInfo.cursorY / this.coordInfo.scale));	
 				]]></body>
