@@ -11,15 +11,15 @@
 	   	   <xul:vbox flex="1">
 				<xul:toolbox orient="vertical" class="change-toolbox">
 					<xul:toolbar flex="1" class="change-toolbar" style="font-size: 9pt;" height="25">
-						<xul:toolbarbutton anonid="selectionmode" change:icon="edit/small" label="${transui:m.mapping.bo.actions.selectarea,ucf,attr}"
+						<xul:toolbarbutton anonid="selectionmode" image="{IconsBase}/small/edit.png" label="${transui:m.mapping.bo.actions.selectarea,ucf,attr}"
 							oncommand="selectionMode();" class="selected" autoCheck="false" type="checkbox" checked="true" />	
-						<xul:toolbarbutton anonid="mappingboxbutton" change:icon="shape-rectangle/small"
+						<xul:toolbarbutton anonid="mappingboxbutton" image="{IconsBase}/small/shape-rectangle.png"
 							label="${transui:m.mapping.bo.actions.Createrectanglearea,ucf,attr}" tooltiptext="${transui:m.mapping.bo.actions.Createrectangleareatooltip,ucf,attr}" 
 							oncommand="createArea('rectarea');" class="unselected" autoCheck="false" type="checkbox"/>
-						<xul:toolbarbutton anonid="mappingcirclebutton" change:icon="shape-circle/small"
+						<xul:toolbarbutton anonid="mappingcirclebutton" image="{IconsBase}/small/shape-circle.png"
 							label="${transui:m.mapping.bo.actions.Createcirclearea,ucf,attr}" tooltiptext="${transui:m.mapping.bo.actions.Createcircleareatooltip,ucf,attr}" 
 							oncommand="createArea('circlearea');" class="unselected" autoCheck="false" type="checkbox"/>
-						<xul:toolbarbutton anonid="mappingpolygonbutton" change:icon="shape-polygon/small"
+						<xul:toolbarbutton anonid="mappingpolygonbutton" image="{IconsBase}/small/shape-polygon.png"
 							label="${transui:m.mapping.bo.actions.Createpolygonarea,ucf,attr}" tooltiptext="${transui:m.mapping.bo.actions.Createpolygonareatooltip,ucf,attr}" 
 							oncommand="createArea('polygonarea');" class="unselected" autoCheck="false" type="checkbox"/>
 							
