@@ -3,7 +3,6 @@
           xmlns:xbl="http://www.mozilla.org/xbl"
           xmlns:html="http://www.w3.org/1999/xhtml"
           xmlns:svg="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
           xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
           
     <binding id="mappingeditor">
@@ -36,12 +35,16 @@
 						<svg:svg anonid="svg-document" style="cursor:crosshair" xbl:inherits="style=editstyle"></svg:svg>
 					</xul:stack>
 					<xul:spacer />
-				</xul:vbox>				
-			<xul:popupset>
-				<xul:menupopup anonid="contextPopup" id="TODO_UNIQUEID_contextPopup">
-					<xul:menuitem label="Supprimer" anonid="delete-current-area" oncommand="deleteCurrentArea();" />
-				</xul:menupopup>
-			</xul:popupset>	
+				</xul:vbox>	
+				<xul:hbox collapsed="true">
+					<xbl:children />	
+				</xul:hbox>	
+				<xul:popupset>
+					<xul:menupopup anonid="contextPopup" id="TODO_UNIQUEID_contextPopup">
+						<xul:menuitem label="Supprimer" anonid="delete-current-area" oncommand="deleteCurrentArea();" />
+					</xul:menupopup>
+				</xul:popupset>	
+				
 			</xul:vbox>
 	   	</content>  	
     	<implementation>    	
@@ -50,7 +53,7 @@
     		<field name="coordInfo">null</field>
     		<field name="tempAreaId">0</field>  
     		<field name="currentArea">null</field>
-    		
+    
 			<property name="mode">
 				<getter><![CDATA[
 					return this.hasAttribute('mode') ? this.getAttribute('mode') : 'select';
@@ -164,8 +167,8 @@
 				<parameter name="createtype"/>
 				<body><![CDATA[
 					var area = document.createElement('mappingarea');
-					area.setAttribute('class', createtype);
-					this.svgDocument.appendChild(area);
+					area.setAttribute('class', createtype);		
+					this.appendChild(area);			
 					return area;
 				]]></body>
 			</method>			
@@ -262,7 +265,11 @@
 					var area = this.currentArea;
 					var remove = area.isValid();
 					this.unselectCurrentArea();
-					if (remove) {this.svgDocument.removeChild(area);}					
+					if (remove) 
+					{
+						this.svgDocument.removeChild(area.svgNode);
+						this.removeChild(area);
+					}					
 				]]></body>
 			</method>						
 			
@@ -300,9 +307,12 @@
 			
 			<method name="setZones">
 				<parameter name="areaInfos"/>
-				<body><![CDATA[		
+				<body><![CDATA[	
+					while (this.lastChild) {this.removeChild(this.lastChild);}
+					
 					var svgDoc = this.svgDocument;
 					while (svgDoc.lastChild) {svgDoc.removeChild(svgDoc.lastChild);}
+					
 					this.currentArea = null;
 					this.updateAreaStatusInfo(null);
 					this.selectionMode();
@@ -322,8 +332,7 @@
 			<method name="getZones">
 				<body><![CDATA[		
 					areaInfos = [];
-					var svgDoc = this.svgDocument;
-					var area = svgDoc.firstChild;
+					var area = this.firstChild;
 					while (area) 
 					{
 						if ('getAreaInfo' in area)
@@ -430,13 +439,14 @@
     	</implementation>
     </binding>
     
-    <binding id="genericarea" extends="svg:generic">
+    <binding id="genericarea">
   		<implementation>
  			<field name="grips">[]</field>
  			<field name="mappingEditor">null</field>
  			<field name="mode">'editing'</field>
 			<field name="initial">null</field>
 			<field name="currentGrip">null</field>
+			<field name="svgNode">null</field>
 
 			<property name="areaId">
 				<getter><![CDATA[
@@ -497,6 +507,7 @@
 					this.createGrips();
 					this.setAttribute('selected', 'true');
 					this.setAttribute('fill', 'yellow');
+					this.applyInherits();
 				]]></body>
 			</method>	
 			
@@ -511,6 +522,7 @@
 					this.grips = [];
 					this.removeAttribute('selected', 'true');
 					this.setAttribute('fill', 'blue');
+					this.applyInherits();
 				]]></body>
 			</method>	
 			
@@ -534,19 +546,45 @@
 					event.stopPropagation();
 				]]></body>
 			</method>
+			
+			<method name="registerMouseDown">
+				<body><![CDATA[
+					var me = this;
+					this.svgNode.addEventListener('mousedown', function(event) {me.onMouseDown(event)}, false);
+				]]></body>
+			</method>			
      	</implementation>
-	    <handlers>
-	      <handler event="mousedown"><![CDATA[
-				this.onMouseDown(event);
-	      ]]></handler>  
-	    </handlers>  
     </binding>
     
     <binding id="rectarea" extends="modules.mapping.cMappingEditor#genericarea">
-    	<content>
-    		<svg:rect stroke="black" stroke-width="1px" fill="blue" opacity="0.5" xbl:inherits="style, x, y, width, height, stroke, stroke-width, fill" />
-    	</content>
     	<implementation>
+    	
+     		<constructor><![CDATA[
+				this.svgNode = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+				this.getMappingEditor().svgDocument.appendChild(this.svgNode);			
+				this.svgNode.setAttribute('opacity', '0.5');
+				this.setAttribute('x', '0');
+				this.setAttribute('y', '0');
+				this.setAttribute('width', '0');
+				this.setAttribute('height', '0');
+				this.applyInherits();
+				this.registerMouseDown();
+			]]></constructor>
+			
+			<method name="applyInherits">
+				<body><![CDATA[
+					var n = this.svgNode;
+					n.setAttribute('stroke', this.hasAttribute('stroke') ? this.getAttribute('stroke') : 'black');
+					n.setAttribute('stroke-width', this.hasAttribute('stroke-width') ? this.getAttribute('stroke-width') : '1px');
+					n.setAttribute('fill', this.hasAttribute('fill') ? this.getAttribute('fill') : 'blue');
+					//n.setAttribute('style', this.getAttribute('style'));
+					n.setAttribute('x', this.getAttribute('x'));
+					n.setAttribute('y', this.getAttribute('y'));
+					n.setAttribute('width', this.getAttribute('width'));
+					n.setAttribute('height',this.getAttribute('height'));
+				]]></body>
+			</method>
+			
     		<method name="getCoord">
 				<body><![CDATA[
 					return  {
@@ -605,6 +643,7 @@
 					this.setAttribute('y', coordInfo.cursorY);
 					this.setAttribute('width', '0');
 					this.setAttribute('height', '0');
+					this.applyInherits();
 					this.mode = 'create';
 					this.areaId = tempId;
 				]]></body>
@@ -648,6 +687,7 @@
 					this.setAttribute('y', Math.round(parseInt(areaInfo.y, 10) * sc));
 					this.setAttribute('width', Math.round(parseInt(areaInfo.width, 10) * sc));
 					this.setAttribute('height', Math.round(parseInt(areaInfo.height, 10) * sc));
+					this.applyInherits();
 				]]></body>
 			</method>			
 			
@@ -662,7 +702,8 @@
 					this.setAttribute('width', Math.abs(dx));
 
 					this.setAttribute('y', (dy < 0) ? coordInfo.cursorY : coordInfo.downY);
-					this.setAttribute('height', Math.abs(dy));					
+					this.setAttribute('height', Math.abs(dy));	
+					this.applyInherits();				
 				]]></body>
 			</method>			
 					
@@ -673,6 +714,7 @@
 					var dy = coordInfo.cursorY -  coordInfo.downY;				
 					this.setAttribute('x', this.initial.x + dx);
 					this.setAttribute('y', this.initial.y + dy);
+					this.applyInherits();
 					this.updateGrips();				
 				]]></body>
 			</method>
@@ -682,6 +724,7 @@
 				<body><![CDATA[
 					var w = this.initial.width + coordInfo.cursorX -  coordInfo.downX;			
 					this.setAttribute('width', w < 0 ? 0 : w);
+					this.applyInherits();
 					this.updateGrips();				
 				]]></body>
 			</method>
@@ -691,6 +734,7 @@
 				<body><![CDATA[
 					var h = this.initial.height + coordInfo.cursorY -  coordInfo.downY;			
 					this.setAttribute('height', h < 0 ? 0 : h);
+					this.applyInherits();
 					this.updateGrips();				
 				]]></body>
 			</method>
@@ -709,6 +753,7 @@
 						this.setAttribute('x', this.initial.x + dx);
 						this.setAttribute('width',  this.initial.width - dx);					
 					}
+					this.applyInherits();
 					this.updateGrips();				
 				]]></body>
 			</method>			
@@ -727,18 +772,41 @@
 						this.setAttribute('y', this.initial.y + dy);
 						this.setAttribute('height', this.initial.height - dy);					
 					}
+					this.applyInherits();
 					this.updateGrips();				
 				]]></body>
 			</method>	
 									
     	</implementation>
     </binding>  
-    
+
     <binding id="circlearea" extends="modules.mapping.cMappingEditor#genericarea">
-    	<content>
-    		<svg:circle stroke="black" stroke-width="1px" fill="blue" opacity="0.5" xbl:inherits="style, cx, cy, r, stroke, stroke-width, fill" />
-    	</content>
     	<implementation>
+     		<constructor><![CDATA[
+				this.svgNode = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+				this.getMappingEditor().svgDocument.appendChild(this.svgNode);			
+				this.svgNode.setAttribute('opacity', '0.5');
+				this.setAttribute('cx', '0');
+				this.setAttribute('cy', '0');
+				this.setAttribute('r', '0');
+				this.applyInherits();
+				this.registerMouseDown();
+			]]></constructor>
+			
+			<method name="applyInherits">
+				<body><![CDATA[
+					var n = this.svgNode;
+					n.setAttribute('stroke', this.hasAttribute('stroke') ? this.getAttribute('stroke') : 'black');
+					n.setAttribute('stroke-width', this.hasAttribute('stroke-width') ? this.getAttribute('stroke-width') : '1px');
+					n.setAttribute('fill', this.hasAttribute('fill') ? this.getAttribute('fill') : 'blue');
+					//n.setAttribute('style', this.getAttribute('style'));
+					n.setAttribute('cx', this.getAttribute('cx'));
+					n.setAttribute('cy', this.getAttribute('cy'));
+					n.setAttribute('r', this.getAttribute('r'));
+				]]></body>
+			</method>
+			
+			
     		<method name="getCoord">
 				<body><![CDATA[
 					return  {
@@ -795,6 +863,7 @@
 					this.setAttribute('cx', coordInfo.cursorX);
 					this.setAttribute('cy', coordInfo.cursorY);
 					this.setAttribute('r', 0);
+					this.applyInherits();
 					this.mode = 'create';
 					this.areaId = tempId;
 				]]></body>
@@ -836,6 +905,7 @@
 					this.setAttribute('cx', Math.round(parseInt(areaInfo.cx, 10) * sc));
 					this.setAttribute('cy', Math.round(parseInt(areaInfo.cy, 10) * sc));
 					this.setAttribute('r', Math.round(parseInt(areaInfo.r, 10) * sc));
+					this.applyInherits();
 				]]></body>
 			</method>
 			
@@ -846,6 +916,7 @@
 					var dy = coordInfo.cursorY -  coordInfo.downY;
 					var r = Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2))
 					this.setAttribute('r', Math.round(r));
+					this.applyInherits();
 				]]></body>
 			</method>			
 					
@@ -856,7 +927,8 @@
 					var dy = coordInfo.cursorY -  coordInfo.downY;				
 					this.setAttribute('cx', this.initial.cx + dx);
 					this.setAttribute('cy', this.initial.cy + dy);
-					this.updateGrips();				
+					this.updateGrips();
+					this.applyInherits();
 				]]></body>
 			</method>
 		
@@ -865,7 +937,8 @@
 				<body><![CDATA[
 					var r = this.initial.r + coordInfo.cursorX -  coordInfo.downX;			
 					this.setAttribute('r', r < 0 ? 0 : r);
-					this.updateGrips();				
+					this.updateGrips();
+					this.applyInherits();				
 				]]></body>
 			</method>
 			
@@ -874,7 +947,8 @@
 				<body><![CDATA[
 					var r = this.initial.r + coordInfo.cursorY -  coordInfo.downY;			
 					this.setAttribute('r', r < 0 ? 0 : r);
-					this.updateGrips();				
+					this.updateGrips();
+					this.applyInherits();				
 				]]></body>
 			</method>
 			
@@ -883,7 +957,8 @@
 				<body><![CDATA[
 					var r = this.initial.r - (coordInfo.cursorX - coordInfo.downX);
 					this.setAttribute('r', r < 0 ? 0 : r);
-					this.updateGrips();				
+					this.updateGrips();
+					this.applyInherits();
 				]]></body>
 			</method>			
 
@@ -892,27 +967,39 @@
 				<body><![CDATA[
 					var r = this.initial.r - (coordInfo.cursorY -  coordInfo.downY);
 					this.setAttribute('r', r < 0 ? 0 : r);
-					this.updateGrips();				
+					this.updateGrips();
+					this.applyInherits();
 				]]></body>
 			</method>
     	</implementation>
     </binding> 
-    
-    <binding id="polygonarea" extends="modules.mapping.cMappingEditor#genericarea">
-    	<content>
-    		<svg:polygon anonid="svg-polygone" stroke="black" stroke-width="1px" fill="blue" opacity="0.5" xbl:inherits="style, points, stroke, stroke-width, fill" />
-    	</content>    	
+
+    <binding id="polygonarea" extends="modules.mapping.cMappingEditor#genericarea">	
     	<implementation>
     		<field name="initial">null</field>
-    		<field name="svgPolygone">null</field>	
     		
     		<constructor><![CDATA[
-    			this.svgPolygone = document.getAnonymousElementByAttribute(this, 'anonid', 'svg-polygone');		
+				this.svgNode = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+				this.getMappingEditor().svgDocument.appendChild(this.svgNode);			
+				this.svgNode.setAttribute('opacity', '0.5');
+				this.applyInherits();
+				this.registerMouseDown();
 			]]></constructor>
-					
+			
+			<method name="applyInherits">
+				<body><![CDATA[
+					var n = this.svgNode;
+					n.setAttribute('stroke', this.hasAttribute('stroke') ? this.getAttribute('stroke') : 'black');
+					n.setAttribute('stroke-width', this.hasAttribute('stroke-width') ? this.getAttribute('stroke-width') : '1px');
+					n.setAttribute('fill', this.hasAttribute('fill') ? this.getAttribute('fill') : 'blue');
+					n.setAttribute('points', this.hasAttribute('points') ? this.getAttribute('points') : '');
+					//n.setAttribute('style', this.getAttribute('style'));
+				]]></body>
+			</method>
+			
     		<method name="getCoord">
 				<body><![CDATA[
-					var points = this.svgPolygone.points;
+					var points = this.svgNode.points;
 					var coord = []					
 				  	for (var i = 0; i < points.numberOfItems; i++)
 					{
@@ -979,15 +1066,11 @@
 			
    			<method name="createGrips">
 				<body><![CDATA[				
-					var nbgrips = this.svgPolygone.points.numberOfItems;
+					var nbgrips = this.svgNode.points.numberOfItems;
 					for (var i = 0; i < nbgrips; i++)
 					{
 						var grip = this.createGrippy('gmp');
 						grip.setAttribute('anonid', this.areaId + '_' + i + '_m');
-						/*
-						var grip = this.createGrippy('gip');
-						grip.setAttribute('anonid', this.areaId + '_' + i + '_i');
-						*/
 					}
 					this.updateGrips();					
 				]]></body>
@@ -1034,6 +1117,7 @@
 						coord.push([Math.round(Math.max(0, x + dx)), Math.round(Math.max(0, y + dy))].join(','));
 					}
 					this.setAttribute('points', coord.join(' '));
+					this.applyInherits();
 					this.updateGrips();				
 				]]></body>
 			</method>			
@@ -1043,6 +1127,7 @@
 				<body><![CDATA[
 					var coord = [[coordInfo.downX, coordInfo.downY].join(','), [coordInfo.cursorX, coordInfo.cursorY].join(',')];
 					this.setAttribute('points', coord.join(' '));
+					this.applyInherits();
 				]]></body>
 			</method>
 			
@@ -1070,6 +1155,7 @@
 					}
 					this.setAttribute('points', coord.join(' '));
 					this.updateGrips();	
+					this.applyInherits();
 				]]></body>
 			</method>			
 
@@ -1097,6 +1183,7 @@
 						coord.push([this.grips[i].getAttribute('cx'), this.grips[i].getAttribute('cy')].join(','));
 					}
 					this.setAttribute('points', coord.join(' '));
+					this.applyInherits();
 					return false;
 				]]></body>
 			</method>
@@ -1139,6 +1226,7 @@
 						points.push([Math.round(parseInt(x, 10) * sc), Math.round(parseInt(y, 10) * sc)].join(','));
 					}
 					this.setAttribute('points', points.join(' '));
+					this.applyInherits();
 				]]></body>
 			</method>	
 		</implementation>    	
