@@ -5,9 +5,9 @@
           xmlns:svg="http://www.w3.org/2000/svg"
           xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
           
-    <binding id="mappingeditor">
-    	<content>
-	   	   <xul:vbox flex="1">
+	<binding id="mappingeditor">
+		<content>
+			<xul:vbox flex="1">
 				<xul:toolbox orient="vertical" class="change-toolbox">
 					<xul:toolbar flex="1" class="change-toolbar" style="font-size: 9pt;" height="25">
 						<xul:toolbarbutton anonid="selectionmode" image="{IconsBase}/small/edit.png" label="${transui:m.mapping.bo.actions.selectarea,ucf,attr}"
@@ -474,7 +474,7 @@
 			<method name="createGrippy">
 				<parameter name="name"/>
 				<body><![CDATA[	
-					grippy = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+					var grippy = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 					grippy.setAttribute('name', name);
 					grippy.setAttribute('r', '5');
 					grippy.setAttribute('fill', 'lime');
